@@ -24,11 +24,9 @@ that is being called.
 
 At its simplest, you can insert a directive into your book's content like so:
 
-````
-```{mydirectivename}
+:::{note}
 My directive content
-```
-````
+:::
 
 This will only work if a directive with name `mydirectivename` already exists
 (which it doesn't). There are many pre-defined directives associated with
@@ -43,9 +41,9 @@ Here is a note
 
 This results in:
 
-```{note}
+:::{note}
 Here is a note
-```
+:::
 
 In your built book.
 
