@@ -44,6 +44,8 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -205,6 +207,21 @@ structured.</p>
 </pre></div>
 </div>
 <p>Check out the content pages bundled with this sample book to see more.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+a_{11}&amp; =b_{11}&amp;
+  a_{12}&amp; =b_{12}\\
+a_{21}&amp; =b_{21}&amp;
+  a_{22}&amp; =b_{22}+c_{22}
+\end{align}
+\end{split}\]</div>
+<div class="math notranslate nohighlight" id="equation-my-label">
+<span class="eqno">(1)<a class="headerlink" href="#equation-my-label" title="Permalink to this equation">¶</a></span>\[w_{t+1} = (1 + r_{t+1}) s(w_t) + y_{t+1}\]</div>
+<ul class="simple">
+<li><p>A link to an equation directive: <a class="reference internal" href="#equation-my-label">(1)</a></p></li>
+<li><p>A link to a dollar math block: <code class="xref eq docutils literal notranslate"><span class="pre">my_other_label</span></code></p></li>
+</ul>
 <div class="toctree-wrapper compound">
 </div>
 </section>
