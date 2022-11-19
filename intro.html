@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Welcome to your Jupyter Book &#8212; Computer Vision and Image Processing</title>
+    <title>Computer Vision and Image Processing &#8212; Computer Vision and Image Processing</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -44,8 +44,6 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -55,7 +53,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Markdown Files" href="markdown.html" />
+    <link rel="next" title="Introduction and the Pinhole camera" href="pinhole.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -95,19 +93,14 @@
         <ul class="nav bd-sidenav">
  <li class="toctree-l1 current">
   <a class="reference internal" href="#">
-   Welcome to your Jupyter Book
+   Computer Vision and Image Processing
   </a>
  </li>
 </ul>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="markdown.html">
-   Markdown Files
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="notebooks.html">
-   Content with notebooks
+  <a class="reference internal" href="pinhole.html">
+   Introduction and the Pinhole camera
   </a>
  </li>
 </ul>
@@ -176,6 +169,29 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#course-description">
+   Course description
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-to-navigate-through-these-notes">
+   How to navigate through these notes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reference-books">
+   Reference books
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -183,45 +199,55 @@
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Welcome to your Jupyter Book</h1>
+                <h1>Computer Vision and Image Processing</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#course-description">
+   Course description
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-to-navigate-through-these-notes">
+   How to navigate through these notes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reference-books">
+   Reference books
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
             
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="welcome-to-your-jupyter-book">
-<h1>Welcome to your Jupyter Book<a class="headerlink" href="#welcome-to-your-jupyter-book" title="Permalink to this headline">¶</a></h1>
-<p>This is a small sample book to give you a feel for how book content is
-structured.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Here is a note!</p>
-</div>
-<p>And here is a code block:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="o">=</span> <span class="n">mc</span><span class="o">^</span><span class="mi">2</span>
-</pre></div>
-</div>
-<p>Check out the content pages bundled with this sample book to see more.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{align}
-a_{11}&amp; =b_{11}&amp;
-  a_{12}&amp; =b_{12}\\
-a_{21}&amp; =b_{21}&amp;
-  a_{22}&amp; =b_{22}+c_{22}
-\end{align}
-\end{split}\]</div>
-<div class="math notranslate nohighlight" id="equation-my-label">
-<span class="eqno">(1)<a class="headerlink" href="#equation-my-label" title="Permalink to this equation">¶</a></span>\[w_{t+1} = (1 + r_{t+1}) s(w_t) + y_{t+1}\]</div>
-<ul class="simple">
-<li><p>A link to an equation directive: <a class="reference internal" href="#equation-my-label">(1)</a></p></li>
-<li><p>A link to a dollar math block: <code class="xref eq docutils literal notranslate"><span class="pre">my_other_label</span></code></p></li>
-</ul>
+  <!-- #region -->
+<section class="tex2jax_ignore mathjax_ignore" id="computer-vision-and-image-processing">
+<h1>Computer Vision and Image Processing<a class="headerlink" href="#computer-vision-and-image-processing" title="Permalink to this headline">¶</a></h1>
+<p>This section contains my notes for the Computer Vision and Image Processing course during the Fall-2022 semester taught by Professor <a class="reference external" href="https://cse.buffalo.edu/~jsyuan/">Junsong Yuan</a>.</p>
+<section id="course-description">
+<h2>Course description<a class="headerlink" href="#course-description" title="Permalink to this headline">¶</a></h2>
+<p>This course is an introduction to those areas of Artificial Intelligence that deal with fundamental issues and techniques of computer vision and image processing. The emphasis is on physical, mathematical, and information-processing aspects of computational vision and image processing. Topics to be covered include image formation, 3-D vision, edge detection, image convolution, extraction of features such as color, texture, and shape, image segmentation, object detection, and computer vision system architectures and applications.</p>
+</section>
+<section id="how-to-navigate-through-these-notes">
+<h2>How to navigate through these notes<a class="headerlink" href="#how-to-navigate-through-these-notes" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="reference-books">
+<h2>Reference books<a class="headerlink" href="#reference-books" title="Permalink to this headline">¶</a></h2>
+<!-- #endregion -->
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -251,10 +277,10 @@ a_{21}&amp; =b_{21}&amp;
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='right-next' id="next-link" href="markdown.html" title="next page">
+    <a class='right-next' id="next-link" href="pinhole.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Markdown Files</p>
+        <p class="prev-next-title">Introduction and the Pinhole camera</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>cvip &#8212; Computer Vision and Image Processing</title>
+    <title>Introduction and the Pinhole camera &#8212; Computer Vision and Image Processing</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -53,6 +53,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Computer Vision and Image Processing" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -92,19 +93,14 @@
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="intro.html">
-   Welcome to your Jupyter Book
+   Computer Vision and Image Processing
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="markdown.html">
-   Markdown Files
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="notebooks.html">
-   Content with notebooks
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Introduction and the Pinhole camera
   </a>
  </li>
 </ul>
@@ -148,7 +144,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/README.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/pinhole.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -173,6 +169,29 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Introduction and the Pinhole camera
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#image-formation">
+   Image Formation
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pinhole-camera-model">
+   Pinhole camera model
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -180,19 +199,90 @@
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>cvip</h1>
+                <h1>Introduction and the Pinhole camera</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Introduction and the Pinhole camera
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#image-formation">
+   Image Formation
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pinhole-camera-model">
+   Pinhole camera model
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
             
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="cvip">
-<h1>cvip<a class="headerlink" href="#cvip" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-and-the-pinhole-camera">
+<h1>Introduction and the Pinhole camera<a class="headerlink" href="#introduction-and-the-pinhole-camera" title="Permalink to this headline">¶</a></h1>
+<p>Have you ever wondered what complex mathematics runs behind the miniature camera that we use in our every day life. Point and shoot cameras are ubiquotous to a point that we take camera technology for granted.</p>
+<p>Consider an image of a railway track.</p>
+<a class="bg-primary mb-1 reference internal image-reference" href="_images/railway.jpg"><img alt="railway" class="bg-primary mb-1 align-center" src="_images/railway.jpg" style="width: 500px;" /></a>
+<p>The rails look as if they converge at the end, however, we know that they do not. The depth of the scene is lost in the image (as the picture is a 2D image). The imperative question arises <span class = 'high'>How do we map a 3D object onto a 2D image?</span> Better yet, How to map a 3D point in space on a 2D plane? While making this 3D to 2D mapping, what is the information about the scene that is lost? What illusions would arise?</p>
+<p>This section aims at answering the above questions while providing a detailed explanation of the pinhole camera.</p>
+<p><strong>Computer Vision Overview</strong></p>
+<ol class="simple">
+<li><p>Low-level vision</p>
+<ol class="simple">
+<li><p>Image processing</p></li>
+<li><p>Edge detection</p></li>
+<li><p>Feature detection</p></li>
+<li><p>Cameras</p></li>
+<li><p>Image formation</p></li>
+</ol>
+</li>
+<li><p>Geometry and algorithms</p>
+<ol class="simple">
+<li><p>Projective Geometry</p></li>
+<li><p>Stereo Vision</p></li>
+<li><p>Structure from motion</p></li>
+</ol>
+</li>
+<li><p>Recognition</p>
+<ol class="simple">
+<li><p>Face detection/recognition</p></li>
+<li><p>Category recognition</p></li>
+<li><p>Image segmentation</p></li>
+</ol>
+</li>
+</ol>
+<p>To model a camera, one must make sure to preserve both geometry and semantics. Some applications of computer vision include but not limited to <a class="reference external" href="https://www.semanticscholar.org/paper/Single-view-modeling-of-free-form-scenes-Zhang-Dugas-Phocion/0193a8ca0dc5c34cb81cccb8070666d6275738c7">Single View modelling</a>, Detection and Recognition, <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S1077314217301170">Visual Question and Answering</a>, Optical Character Recognition, Entertainment (e.g., Snapchat), Shape Reconstruction using depth sensors, <a class="reference external" href="https://grail.cs.washington.edu/rome/">Building rome in a day!</a>, 3D Scanning, Medical Imaging and so on.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="image-formation">
+<h1>Image Formation<a class="headerlink" href="#image-formation" title="Permalink to this headline">¶</a></h1>
+<p>How a colorful image is formed? All the images are a resultant of the following entities:</p>
+<ol class="simple">
+<li><p>Lighting Conditions</p></li>
+<li><p>Scene Geometry</p></li>
+<li><p>Surface Properties</p></li>
+<li><p>Camera Properties</p></li>
+</ol>
+<p><span class = 'high'>The focus of this course is predominantly on the Camera Properties.</span> The image formation requires a light source (e.g., sun) continuously emits photons. These photons are reflected by the surface and a portion of this light is directed towards the camera.</p>
+<p><strong>The sensor plane (the film) has physical existence, but the image plane is virtual.</strong> The image plane is flipped upside down as compared to the sensor plane.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pinhole-camera-model">
+<h1>Pinhole camera model<a class="headerlink" href="#pinhole-camera-model" title="Permalink to this headline">¶</a></h1>
+<p>The pinhole camera makes sure that every unique point in the physical space falls on the film.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -219,7 +309,14 @@
               
             
                 <!-- Previous / next buttons -->
-<div class='prev-next-area'>
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Computer Vision and Image Processing</p>
+        </div>
+    </a>
 </div>
             
         </div>

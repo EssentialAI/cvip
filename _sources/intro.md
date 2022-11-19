@@ -1,33 +1,16 @@
-# Welcome to your Jupyter Book
+<!-- #region -->
+# Computer Vision and Image Processing
 
-This is a small sample book to give you a feel for how book content is
-structured.
+This section contains my notes for the Computer Vision and Image Processing course during the Fall-2022 semester taught by Professor [Junsong Yuan](https://cse.buffalo.edu/~jsyuan/).
 
-:::{note}
-Here is a note!
-:::
+### Course description
 
-And here is a code block:
+This course is an introduction to those areas of Artificial Intelligence that deal with fundamental issues and techniques of computer vision and image processing. The emphasis is on physical, mathematical, and information-processing aspects of computational vision and image processing. Topics to be covered include image formation, 3-D vision, edge detection, image convolution, extraction of features such as color, texture, and shape, image segmentation, object detection, and computer vision system architectures and applications.
 
-```
-e = mc^2
-```
 
-Check out the content pages bundled with this sample book to see more.
+### How to navigate through these notes
 
-$$
-\begin{align}
-a_{11}& =b_{11}&
-  a_{12}& =b_{12}\\
-a_{21}& =b_{21}&
-  a_{22}& =b_{22}+c_{22}
-\end{align}
-$$
+### Reference books
 
-```{math}
-:label: my_label
-w_{t+1} = (1 + r_{t+1}) s(w_t) + y_{t+1}
-```
 
-- A link to an equation directive: {eq}`my_label`
-- A link to a dollar math block: {eq}`my_other_label`
+<!-- #endregion -->
