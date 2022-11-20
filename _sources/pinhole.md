@@ -4,12 +4,13 @@ Have you ever wondered what complex mathematics runs behind the miniature camera
 
 Consider an image of a railway track. 
 
-```{image} /imgs/railway.jpg
-:alt: railway
-:class: bg-primary mb-1
-:width: 500px
-:align: center
+```{figure} /imgs/railway.jpg
 
+---
+name: railway
+---
+
+Seemingly converging rails
 ```
 
 The rails look as if they converge at the end, however, we know that they do not. The depth of the scene is lost in the image (as the picture is a 2D image). The imperative question arises <span class = 'high'>How do we map a 3D object onto a 2D image?</span> Better yet, How to map a 3D point in space on a 2D plane? While making this 3D to 2D mapping, what is the information about the scene that is lost? What illusions would arise?
@@ -60,6 +61,41 @@ name: pinhole_1
 Pinhole camera
 ```
 
+```{figure} /imgs/pinhole_2.PNG
+
+---
+height: 150px
+name: pinhole_2
+---
+
+Pinhole camera Model
+```
+
+The image that we see on the screen after taking an image is virtual image plane. Same phenomenon happens in human eyes.
+
+Zooming in and Zooming out changes the focal length of a camera. (Not digital zoom, optical zoom)
+
+```{figure} /imgs/focal_length.PNG
+
+---
+height: 150px
+name: focal length
+---
+
+Pinhole camera 2D representation
+```
+The above diagram gives us the first equation for image formation in computer vision.
+
+\begin{gather*}
+\frac{\text{Object size}}{\text{Object distance}} = \frac{\text{Image size}}{\text{Focal Length}}
+\end{gather*}
+
+```{math}
+:label: focal_length
+\frac{Y}{Z} = \frac{y}{f}
+```
+
+In the above figure the focal length is the only parameter that can be changed (as the size of the object and the distance from camera is assumed to be fixed.) This means that upon increasing the focal length the size of the image increases proportionally. When we zooom in, we increase the focal length.
 
 
 
