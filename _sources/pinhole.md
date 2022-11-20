@@ -9,6 +9,7 @@ Consider an image of a railway track.
 :class: bg-primary mb-1
 :width: 500px
 :align: center
+
 ```
 
 The rails look as if they converge at the end, however, we know that they do not. The depth of the scene is lost in the image (as the picture is a 2D image). The imperative question arises <span class = 'high'>How do we map a 3D object onto a 2D image?</span> Better yet, How to map a 3D point in space on a 2D plane? While making this 3D to 2D mapping, what is the information about the scene that is lost? What illusions would arise?
@@ -49,12 +50,14 @@ How a colorful image is formed? All the images are a resultant of the following 
 
 The pinhole camera makes sure that every unique point in the physical space falls on the film.
 
-```{figure} /imgs/pinhole_1.png
+```{figure} /imgs/pinhole_1.PNG
+
 ---
-<!-- height: 150px -->
+height: 150px
 name: pinhole_1
 ---
-The pinhole camera.
+
+Pinhole camera
 ```
 
 
