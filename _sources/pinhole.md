@@ -247,15 +247,15 @@ r_{31} & r_{32} & r_{33}
 \end{bmatrix}
 ```
 
-$$ \text{If } $P_c =  \begin{bmatrix}
+$$ \text{If } P_c =  \begin{bmatrix}
 X_c \\
 Y_c \\
 Z_c 
-\end{bmatrix}$ \text{ and } $P_w = \begin{bmatrix}
+\end{bmatrix} \text{ and } P_w = \begin{bmatrix}
 X_w \\
 Y_w \\
 Z_w 
-\end{bmatrix}$, \text{ then}
+\end{bmatrix}, \text{ then}
 $$
 
 ```{math}
