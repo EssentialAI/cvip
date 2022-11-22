@@ -81,26 +81,28 @@ name: focal length
 
 Pinhole camera 2D representation
 ```
-The above diagram gives us the first equation for image formation in computer vision.
+The above diagram gives us the first equation for image formation in computer vision. Given a 3D point $P =(X,Y,Z)^T$, the camera projects this point to onto a $2D$ image plane to $p = (x,y)^T$. From the above figure:
 
 \begin{gather*}
 \frac{\text{Object size}}{\text{Object distance}} = \frac{\text{Image size}}{\text{Focal Length}}
 \end{gather*}
 
 ```{math}
-:label: focal_length
-\frac{Y}{Z} = \frac{y}{f}
+:label: first_equation
+\frac{X}{Z} = \frac{x}{f}, \frac{Y}{Z} = \frac{y}{f}
 ```
 
-\begin{gather*}
-y = f\frac{Y}{Z}
-\end{gather*}
-
-
+$$x=f \frac{X}{Z}, y = f\frac{Y}{Z}$$
 
 This is the simplest form of perspective projection. You can change the size of the image by changing any of the above 3 parameters. For a simple example of human face, the image size can be increased by i) actually having a bigger object size $Y$, ii) increasing the focal length $f$, and iii) bringing the object closer to the camera (decreasing $Z$)
 
 In the above figure the focal length is the only parameter that can be changed (as the size of the object and the distance from camera is assumed to be fixed.) This means that upon increasing the focal length the size of the image increases proportionally. When we zooom in, we increase the focal length.
+
+
+```{admonition} If I zoom in/out of a picture after taking a picture, will focal length change?
+:class: tip
+After taking a picture, if you zoom in and zoom out, it is a digital zoom. It does not change the focal length of the camera.
+```
 
 ```{admonition} How to calculate the default focal length of a smartphone camera?
 :class: tip
@@ -109,7 +111,36 @@ In the above figure the focal length is the only parameter that can be changed (
 
 **The aim of a camera is to map each of the 3D point in the 3D world to a location in the 2D image plane. Camera does the 3D-2D mapping.** It is also called as the Perspective projection. This leads to a question about how to recover a 3D location of a point from a 2D image.
 
-While projecting from 3D to 2D, the depth information is lost (also the angles between objects in 3D) are lost. `Each ray becomes a pixel on the image plane.`
+While projecting from 3D to 2D, the depth information is lost (also the angles between objects in 3D) are lost. <span class = 'high'>Each ray becomes a pixel on the image plane.</span>
+
+```{note}
+In the above perspective projection, the angle between lines is not preserved and the depth information is lost.
+```
+
+When the distance between camera and the object is too large (god’s view), the difference in sizes of closer objects and far objects is not preserved.
+
+$x = sX, y = sY, \text{ where } s=\frac{f}{Z_0}$, $Z_0$ is the distance between camera and the object.
+
+## Projection Matrix
+```{math}
+:label: second_eq
+\begin{pmatrix}
+fX \\
+fY \\
+Z
+\end{pmatrix} = \begin{bmatrix}
+f & 0 & 0 & 0\\
+0 & f & 0  & 0\\
+0 & 0 & 1 & 0
+\end{bmatrix}\begin{pmatrix}
+X\\
+Y\\
+Z\\
+1
+\end{pmatrix}
+```
+
+The simplest form of perspective projection in matrix form is given by the above equation.
 
 
 
