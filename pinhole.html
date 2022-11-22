@@ -428,7 +428,13 @@ title="Print to PDF"
 <section id="projection-matrix">
 <h2>Projection Matrix<a class="headerlink" href="#projection-matrix" title="Permalink to this headline">#</a></h2>
 <div class="math notranslate nohighlight" id="equation-second-eq">
-<span class="eqno">(2)<a class="headerlink" href="#equation-second-eq" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{pmatrix}
+<span class="eqno">(2)<a class="headerlink" href="#equation-second-eq" title="Permalink to this equation">#</a></span>\[\begin{split}Z \begin{pmatrix}
+\frac{fX}{Z} \\
+\frac{fY}{Z} \\
+1
+\end{pmatrix}
+=
+\begin{pmatrix}
 fX \\
 fY \\
 Z
@@ -443,6 +449,41 @@ Z\\
 1
 \end{pmatrix}\end{split}\]</div>
 <p>The simplest form of perspective projection in matrix form is given by the above equation.</p>
+<div class="tip admonition">
+<p class="admonition-title">What is the need for extra row in the 3D coordinate?</p>
+<p>The extra column of zeros and the extra 1 in the 3D coordinate is added to incorporate the translation.</p>
+</div>
+<div class="note admonition">
+<p class="admonition-title">What do the distances <span class="math notranslate nohighlight">\(X, Y, Z\)</span> mean here?</p>
+<p><span class="math notranslate nohighlight">\(X,Y,Z\)</span> are the relative coordinates of a 3D point from the camera origin. This means that when the object is moved or the camera is moved, the values of <span class="math notranslate nohighlight">\(X,Y,Z\)</span> change.</p>
+</div>
+<p>This leads us to the question, What about the values of <span class="math notranslate nohighlight">\(x,y\)</span>? These pixel values are relative to the origin <code class="docutils literal notranslate"><span class="pre">Principal</span> <span class="pre">point</span></code> of the image plane. Typically the origin of an image is located at the bottom left or the top left.</p>
+<p>Hence, there is a need to make sure the principal point overlaps with the image origin, and we add an <strong>offset</strong> <span class="math notranslate nohighlight">\(p_x\)</span> and <span class="math notranslate nohighlight">\(p_y\)</span> within the image plane to resolve this issue. <strong>Keep in mind that this translation is not caused by the movement of the object or the camera. It an intrinsic parameter of every camera.</strong></p>
+<p>The <a class="reference internal" href="#equation-second-eq">(2)</a> becomes:</p>
+<div class="math notranslate nohighlight" id="equation-third-eq">
+<span class="eqno">(3)<a class="headerlink" href="#equation-third-eq" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{pmatrix}
+fX + Zp_x \\
+fY + Zp_y\\
+Z
+\end{pmatrix} = \begin{bmatrix}
+f &amp; 0 &amp; p_x &amp; 0\\
+0 &amp; f &amp; p_y  &amp; 0\\
+0 &amp; 0 &amp; 1 &amp; 0
+\end{bmatrix}\begin{pmatrix}
+X\\
+Y\\
+Z\\
+1
+\end{pmatrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+k = \begin{bmatrix}
+f &amp; 0 &amp; p_x \\
+0 &amp; f &amp; p_y  \\
+0 &amp; 0 &amp; 1 
+\end{bmatrix}
+\end{split}\]</div>
+<p><strong>This is the (Intrinsic) calibration matrix.</strong></p>
 </section>
 </section>
 

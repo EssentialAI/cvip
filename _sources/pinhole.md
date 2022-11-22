@@ -124,6 +124,12 @@ $x = sX, y = sY, \text{ where } s=\frac{f}{Z_0}$, $Z_0$ is the distance between 
 ## Projection Matrix
 ```{math}
 :label: second_eq
+Z \begin{pmatrix}
+\frac{fX}{Z} \\
+\frac{fY}{Z} \\
+1
+\end{pmatrix}
+=
 \begin{pmatrix}
 fX \\
 fY \\
@@ -141,6 +147,52 @@ Z\\
 ```
 
 The simplest form of perspective projection in matrix form is given by the above equation.
+
+```{admonition} What is the need for extra row in the 3D coordinate?
+:class: tip
+
+The extra column of zeros and the extra 1 in the 3D coordinate is added to incorporate the translation.
+```
+
+```{admonition} What do the distances $X, Y, Z$ mean here?
+:class: note
+$X,Y,Z$ are the relative coordinates of a 3D point from the camera origin. This means that when the object is moved or the camera is moved, the values of $X,Y,Z$ change.
+```
+This leads us to the question, What about the values of $x,y$? These pixel values are relative to the origin `Principal point` of the image plane. Typically the origin of an image is located at the bottom left or the top left.
+
+Hence, there is a need to make sure the principal point overlaps with the image origin, and we add an **offset** $p_x$ and $p_y$ within the image plane to resolve this issue. **Keep in mind that this translation is not caused by the movement of the object or the camera. It an intrinsic parameter of every camera.**
+
+The {eq}`second_eq` becomes:
+
+```{math}
+:label: third_eq
+
+\begin{pmatrix}
+fX + Zp_x \\
+fY + Zp_y\\
+Z
+\end{pmatrix} = \begin{bmatrix}
+f & 0 & p_x & 0\\
+0 & f & p_y  & 0\\
+0 & 0 & 1 & 0
+\end{bmatrix}\begin{pmatrix}
+X\\
+Y\\
+Z\\
+1
+\end{pmatrix}
+```
+$$
+k = \begin{bmatrix}
+f & 0 & p_x \\
+0 & f & p_y  \\
+0 & 0 & 1 
+\end{bmatrix}
+$$
+
+**This is the (Intrinsic) calibration matrix.**
+
+
 
 
 
