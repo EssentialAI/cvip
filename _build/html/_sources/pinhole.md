@@ -121,9 +121,15 @@ When the distance between camera and the object is too large (god’s view), the
 
 $x = sX, y = sY, \text{ where } s=\frac{f}{Z_0}$, $Z_0$ is the distance between camera and the object.
 
-## Projection Matrix
+## Projection Matrix and the Intrinsic parameters
 ```{math}
 :label: second_eq
+Z \begin{pmatrix}
+\frac{fX}{Z} \\
+\frac{fY}{Z} \\
+1
+\end{pmatrix}
+=
 \begin{pmatrix}
 fX \\
 fY \\
@@ -141,6 +147,151 @@ Z\\
 ```
 
 The simplest form of perspective projection in matrix form is given by the above equation.
+
+```{admonition} What is the need for extra row in the 3D coordinate?
+:class: tip
+
+The extra column of zeros and the extra 1 in the 3D coordinate is added to incorporate the translation.
+```
+
+```{admonition} What do the distances $X, Y, Z$ mean here?
+:class: note
+$X,Y,Z$ are the relative coordinates of a 3D point from the camera origin. This means that when the object is moved or the camera is moved, the values of $X,Y,Z$ change.
+```
+This leads us to the question, What about the values of $x,y$? These pixel values are relative to the origin `Principal point` of the image plane. Typically the origin of an image is located at the bottom left or the top left.
+
+Hence, there is a need to make sure the principal point overlaps with the image origin, and we add an **offset** $p_x$ and $p_y$ within the image plane to resolve this issue. **Keep in mind that this offset is not caused by the movement of the object or the camera. It an intrinsic parameter of every camera.**
+
+The {eq}`second_eq` becomes:
+
+```{math}
+:label: third_eq
+
+\begin{pmatrix}
+fX + Zp_x \\
+fY + Zp_y\\
+Z
+\end{pmatrix} = \begin{bmatrix}
+f & 0 & p_x & 0\\
+0 & f & p_y  & 0\\
+0 & 0 & 1 & 0
+\end{bmatrix}\begin{pmatrix}
+X\\
+Y\\
+Z\\
+1
+\end{pmatrix}
+```
+$$
+K = \begin{bmatrix}
+f & 0 & p_x \\
+0 & f & p_y  \\
+0 & 0 & 1 
+\end{bmatrix}
+$$
+
+**This is the (Intrinsic) calibration matrix.**
+
+There is an advanced version of the above matrix. It is called Camera Calibration matrix.
+
+```{math}
+:label: intrinsic_eq
+K = \begin{bmatrix}
+\gamma f & s & p_x \\
+0 & f & p_y  \\
+0 & 0 & 1 
+\end{bmatrix}
+```
+
+$\gamma$ - when you zoom in and zoom out, the $x$ and $y$ co-ordinates are changed proportionally. However if there is an unproportional change in $x$ and $y$ axes, $\gamma$ takes care of that. $\gamma$ is also called the `aspect ratio` of the pixel.
+
+$s$ - skew of the sensor pixel, i.e., if the pixel is a parallelogram and not a square.
+
+**There are 5 intrinsic parameters for a camera.** Refer {eq}`intrinsic_eq`
+
+## Extrinsic parameters of a camera
+The extrinsic parameters come into picture, even before shooting an image. Where the camera is located and it's angle. **(Rotation and Translation)**.
+
+These are the parameters that identify uniquely the transformation between the `unknown camera reference frame` and the `known world reference frame`.
+
+Determining these parameters includes:
+1. Finding the translation vector between the relative positions of the origins of the two reference frames.
+2. Finding the rotation matrix that brings the corresponding axes of the two frames into alignment (i.e., onto each other).
+
+```{figure} /imgs/rot_translate.PNG
+
+---
+height: 150px
+name: rot_translate
+---
+
+Rotation and Translation from world coordinates to camera coordinates.
+```
+
+Using the extrinsic camera parameters, we can find the relation between the coordinates of a point $P$ in the world $(P_w)$ and camera $(P_c)$ coordinates:
+
+```{math}
+:label: extrinsic
+
+P_c = R(P_w-T)
+
+```
+where
+
+```{math}
+:label: extrinsic 1
+R = \begin{bmatrix}
+r_{11} & r_{12} & r_{13}  \\
+r_{21} & r_{22} & r_{23}   \\
+r_{31} & r_{32} & r_{33} 
+\end{bmatrix}
+```
+
+$$ \text{If } P_c =  \begin{bmatrix}
+X_c \\
+Y_c \\
+Z_c 
+\end{bmatrix} \text{ and } P_w = \begin{bmatrix}
+X_w \\
+Y_w \\
+Z_w 
+\end{bmatrix}, \text{ then}
+$$
+
+```{math}
+:label: extrinsic_final
+
+\begin{bmatrix}
+X_c \\
+Y_c \\
+Z_c 
+\end{bmatrix} = \begin{bmatrix}
+r_{11} & r_{12} & r_{13}  \\
+r_{21} & r_{22} & r_{23}   \\
+r_{31} & r_{32} & r_{33} 
+\end{bmatrix}\begin{bmatrix}
+X_w-T_x \\
+Y_w-T_y \\
+Z_w-T_z 
+\end{bmatrix}
+```
+In other words, we first translate the coordinates to match the camera coordinates and then rotate the axes so that both camera axes and world coordinate axes overlap.
+
+$$
+X_c = R_1^T(P_w-T) \\
+Y_c = R_2^T(P_w-T) \\
+Z_c = R_3^T(P_w-T)
+$$
+
+where $R_i^T$ corresponds to the $i^{th}$ row of the rotation matrix.
+
+
+
+
+
+
+
+
 
 
 

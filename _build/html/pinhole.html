@@ -271,8 +271,13 @@ title="Print to PDF"
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#projection-matrix">
-     Projection Matrix
+    <a class="reference internal nav-link" href="#projection-matrix-and-the-intrinsic-parameters">
+     Projection Matrix and the Intrinsic parameters
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#extrinsic-parameters-of-a-camera">
+     Extrinsic parameters of a camera
     </a>
    </li>
   </ul>
@@ -312,8 +317,13 @@ title="Print to PDF"
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#projection-matrix">
-     Projection Matrix
+    <a class="reference internal nav-link" href="#projection-matrix-and-the-intrinsic-parameters">
+     Projection Matrix and the Intrinsic parameters
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#extrinsic-parameters-of-a-camera">
+     Extrinsic parameters of a camera
     </a>
    </li>
   </ul>
@@ -425,10 +435,16 @@ title="Print to PDF"
 </div>
 <p>When the distance between camera and the object is too large (god’s view), the difference in sizes of closer objects and far objects is not preserved.</p>
 <p><span class="math notranslate nohighlight">\(x = sX, y = sY, \text{ where } s=\frac{f}{Z_0}\)</span>, <span class="math notranslate nohighlight">\(Z_0\)</span> is the distance between camera and the object.</p>
-<section id="projection-matrix">
-<h2>Projection Matrix<a class="headerlink" href="#projection-matrix" title="Permalink to this headline">#</a></h2>
+<section id="projection-matrix-and-the-intrinsic-parameters">
+<h2>Projection Matrix and the Intrinsic parameters<a class="headerlink" href="#projection-matrix-and-the-intrinsic-parameters" title="Permalink to this headline">#</a></h2>
 <div class="math notranslate nohighlight" id="equation-second-eq">
-<span class="eqno">(2)<a class="headerlink" href="#equation-second-eq" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{pmatrix}
+<span class="eqno">(2)<a class="headerlink" href="#equation-second-eq" title="Permalink to this equation">#</a></span>\[\begin{split}Z \begin{pmatrix}
+\frac{fX}{Z} \\
+\frac{fY}{Z} \\
+1
+\end{pmatrix}
+=
+\begin{pmatrix}
 fX \\
 fY \\
 Z
@@ -443,6 +459,110 @@ Z\\
 1
 \end{pmatrix}\end{split}\]</div>
 <p>The simplest form of perspective projection in matrix form is given by the above equation.</p>
+<div class="tip admonition">
+<p class="admonition-title">What is the need for extra row in the 3D coordinate?</p>
+<p>The extra column of zeros and the extra 1 in the 3D coordinate is added to incorporate the translation.</p>
+</div>
+<div class="note admonition">
+<p class="admonition-title">What do the distances <span class="math notranslate nohighlight">\(X, Y, Z\)</span> mean here?</p>
+<p><span class="math notranslate nohighlight">\(X,Y,Z\)</span> are the relative coordinates of a 3D point from the camera origin. This means that when the object is moved or the camera is moved, the values of <span class="math notranslate nohighlight">\(X,Y,Z\)</span> change.</p>
+</div>
+<p>This leads us to the question, What about the values of <span class="math notranslate nohighlight">\(x,y\)</span>? These pixel values are relative to the origin <code class="docutils literal notranslate"><span class="pre">Principal</span> <span class="pre">point</span></code> of the image plane. Typically the origin of an image is located at the bottom left or the top left.</p>
+<p>Hence, there is a need to make sure the principal point overlaps with the image origin, and we add an <strong>offset</strong> <span class="math notranslate nohighlight">\(p_x\)</span> and <span class="math notranslate nohighlight">\(p_y\)</span> within the image plane to resolve this issue. <strong>Keep in mind that this offset is not caused by the movement of the object or the camera. It an intrinsic parameter of every camera.</strong></p>
+<p>The <a class="reference internal" href="#equation-second-eq">(2)</a> becomes:</p>
+<div class="math notranslate nohighlight" id="equation-third-eq">
+<span class="eqno">(3)<a class="headerlink" href="#equation-third-eq" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{pmatrix}
+fX + Zp_x \\
+fY + Zp_y\\
+Z
+\end{pmatrix} = \begin{bmatrix}
+f &amp; 0 &amp; p_x &amp; 0\\
+0 &amp; f &amp; p_y  &amp; 0\\
+0 &amp; 0 &amp; 1 &amp; 0
+\end{bmatrix}\begin{pmatrix}
+X\\
+Y\\
+Z\\
+1
+\end{pmatrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+K = \begin{bmatrix}
+f &amp; 0 &amp; p_x \\
+0 &amp; f &amp; p_y  \\
+0 &amp; 0 &amp; 1 
+\end{bmatrix}
+\end{split}\]</div>
+<p><strong>This is the (Intrinsic) calibration matrix.</strong></p>
+<p>There is an advanced version of the above matrix. It is called Camera Calibration matrix.</p>
+<div class="math notranslate nohighlight" id="equation-intrinsic-eq">
+<span class="eqno">(4)<a class="headerlink" href="#equation-intrinsic-eq" title="Permalink to this equation">#</a></span>\[\begin{split}K = \begin{bmatrix}
+\gamma f &amp; s &amp; p_x \\
+0 &amp; f &amp; p_y  \\
+0 &amp; 0 &amp; 1 
+\end{bmatrix}\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(\gamma\)</span> - when you zoom in and zoom out, the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> co-ordinates are changed proportionally. However if there is an unproportional change in <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> axes, <span class="math notranslate nohighlight">\(\gamma\)</span> takes care of that. <span class="math notranslate nohighlight">\(\gamma\)</span> is also called the <code class="docutils literal notranslate"><span class="pre">aspect</span> <span class="pre">ratio</span></code> of the pixel.</p>
+<p><span class="math notranslate nohighlight">\(s\)</span> - skew of the sensor pixel, i.e., if the pixel is a parallelogram and not a square.</p>
+<p><strong>There are 5 intrinsic parameters for a camera.</strong> Refer <a class="reference internal" href="#equation-intrinsic-eq">(4)</a></p>
+</section>
+<section id="extrinsic-parameters-of-a-camera">
+<h2>Extrinsic parameters of a camera<a class="headerlink" href="#extrinsic-parameters-of-a-camera" title="Permalink to this headline">#</a></h2>
+<p>The extrinsic parameters come into picture, even before shooting an image. Where the camera is located and it’s angle. <strong>(Rotation and Translation)</strong>.</p>
+<p>These are the parameters that identify uniquely the transformation between the <code class="docutils literal notranslate"><span class="pre">unknown</span> <span class="pre">camera</span> <span class="pre">reference</span> <span class="pre">frame</span></code> and the <code class="docutils literal notranslate"><span class="pre">known</span> <span class="pre">world</span> <span class="pre">reference</span> <span class="pre">frame</span></code>.</p>
+<p>Determining these parameters includes:</p>
+<ol class="simple">
+<li><p>Finding the translation vector between the relative positions of the origins of the two reference frames.</p></li>
+<li><p>Finding the rotation matrix that brings the corresponding axes of the two frames into alignment (i.e., onto each other).</p></li>
+</ol>
+<figure class="align-default" id="id4">
+<img alt="_images/rot_translate.PNG" src="_images/rot_translate.PNG" />
+<figcaption>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">Rotation and Translation from world coordinates to camera coordinates.</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Using the extrinsic camera parameters, we can find the relation between the coordinates of a point <span class="math notranslate nohighlight">\(P\)</span> in the world <span class="math notranslate nohighlight">\((P_w)\)</span> and camera <span class="math notranslate nohighlight">\((P_c)\)</span> coordinates:</p>
+<div class="math notranslate nohighlight" id="equation-extrinsic">
+<span class="eqno">(5)<a class="headerlink" href="#equation-extrinsic" title="Permalink to this equation">#</a></span>\[P_c = R(P_w-T)\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight" id="equation-extrinsic-1">
+<span class="eqno">(6)<a class="headerlink" href="#equation-extrinsic-1" title="Permalink to this equation">#</a></span>\[\begin{split}R = \begin{bmatrix}
+r_{11} &amp; r_{12} &amp; r_{13}  \\
+r_{21} &amp; r_{22} &amp; r_{23}   \\
+r_{31} &amp; r_{32} &amp; r_{33} 
+\end{bmatrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split} \text{If } P_c =  \begin{bmatrix}
+X_c \\
+Y_c \\
+Z_c 
+\end{bmatrix} \text{ and } P_w = \begin{bmatrix}
+X_w \\
+Y_w \\
+Z_w 
+\end{bmatrix}, \text{ then}
+\end{split}\]</div>
+<div class="math notranslate nohighlight" id="equation-extrinsic-final">
+<span class="eqno">(7)<a class="headerlink" href="#equation-extrinsic-final" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{bmatrix}
+X_c \\
+Y_c \\
+Z_c 
+\end{bmatrix} = \begin{bmatrix}
+r_{11} &amp; r_{12} &amp; r_{13}  \\
+r_{21} &amp; r_{22} &amp; r_{23}   \\
+r_{31} &amp; r_{32} &amp; r_{33} 
+\end{bmatrix}\begin{bmatrix}
+X_w-T_x \\
+Y_w-T_y \\
+Z_w-T_z 
+\end{bmatrix}\end{split}\]</div>
+<p>In other words, we first translate the coordinates to match the camera coordinates and then rotate the axes so that both camera axes and world coordinate axes overlap.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+X_c = R_1^T(P_w-T) \\
+Y_c = R_2^T(P_w-T) \\
+Z_c = R_3^T(P_w-T)
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(R_i^T\)</span> corresponds to the <span class="math notranslate nohighlight">\(i^{th}\)</span> row of the rotation matrix.</p>
 </section>
 </section>
 
