@@ -212,7 +212,7 @@ $s$ - skew of the sensor pixel, i.e., if the pixel is a parallelogram and not a 
 ## Extrinsic parameters of a camera
 The extrinsic parameters come into picture, even before shooting an image. Where the camera is located and it's angle. **(Rotation and Translation)**.
 
-These are the parameters that identify uniquely the transformation between the `unknown camera reference frame` and the `known world reference frame`.
+These are the parameters that identify uniquely the transformation between the <span class = 'high'>unknown camera reference frame</span> and the </span class='high'>known world reference frame.</span>
 
 Determining these parameters includes:
 1. Finding the translation vector between the relative positions of the origins of the two reference frames.
@@ -359,6 +359,86 @@ name: matrix_m
 Solving for the matrix $M$
 ```
 where the first matrix is of size $2n \times 12$ ($n$ is the number of available points.)
+
+In the above homogeneous linear equation $Ax=0$, we know the values of image coordinates and the real-world coordinates. We are required for find the elements of the matrix $M$. The above equation has infinite solutions for $Ax = 0$, since we can randomly scale $x$ with a scalar $\lambda$ such that $A(\lambda x)= 0$. Therefore, we assume $||x||=1$, solving the equation can be converted to:
+
+$$
+min||Ax||
+$$
+
+The minimization problem can be solved with <span class = "high">Singular Value Decomposition (SVD)</span>. Assume that $A$ can be decomposed to $U\Sigma V^T$, we have
+
+$$
+min||Ax|| = ||U \Sigma V^Tx|| = ||\Sigma V^Tx||
+$$
+
+Since $||V^Tx||=||x||=1$, then we have $min||Ax|| = ||\Sigma y||$.
+
+As $||y||=1$, $x$ should be the last row of $V^T$.
+
+Once we have the matrix $M$, 
+
+```{math}
+:label: m_matrix
+M = \begin{bmatrix}m_{11} & m_{12} & m_{13} & m_{14}  \\
+m_{21} & m_{22} & m_{23} & m_{24}  \\
+m_{31} & m_{32} & m_{33} & m_{34}\end{bmatrix} = \begin{bmatrix} f_xr_{11}+o_xr_{31} & f_x r_{12}+o_xr_{32} & f_xr_{13}+o_xr_{33}&f_xT_x+o_xT_z \\
+f_y r_{21}+o_yr_{31} & f_yr_{22}+ o_y r_{32} & f_yr_{23}+o_yr_{33} & f_yT_y+o_yT_z \\
+r_{31} & r_{32} & r_{33} & T_z\end{bmatrix}
+```
+
+Here, $M$ is the projection matrix. Let's define 
+
+$$
+\begin{align}
+m_1 &= (m_{11}, m_{12}, m_{13})^T \\ 
+m_2 &= (m_{21}, m_{22}, m_{23})^T \\
+m_3 &= (m_{31}, m_{32}, m_{33})^T \\
+m_4 &= (m_{14}, m_{24}, m_{34})^T
+\end{align}
+$$
+
+Also we define,
+
+$$
+\begin{align}
+r_1 &= (r_{11}, r_{12}, r_{13})^T \\
+r_2 &= (r_{21}, r_{22}, r_{23})^T \\
+r_3 &= (r_{31}, r_{32}, r_{33})^T
+\end{align}
+$$
+
+Observe that $(r_1, r_2, r_3)$ is the rotation matrix, then
+
+```{math}
+:label: rotation_m
+
+(r_1, r_2, r_3) \begin{pmatrix}
+r_1^T\\
+r_2^T\\
+r_3^T 
+\end{pmatrix} = \begin{pmatrix}
+1 & 0 & 0\\ 
+0 & 1 & 0\\ 
+0 & 0 & 1
+\end{pmatrix}
+```
+
+Then we have $r_i^Tr_i = 1, r_i^Tr_j=0 \enspace (i \neq j)$.
+
+From $M$ we have,
+
+$$
+m_1^Tm_3 = o_x $$
+
+$$m_1^Tm_1 = f_x^2+o_x^2$$
+
+$$o_x = m_1^Tm_3, \enspace o_y = m_2^Tm_3$$
+
+$$f_x = \sqrt{m_1^Tm_1 - o_x^2}, \enspace f_y = \sqrt{m_2^Tm_2 - o_y^2}$$
+
+
+
 <!-- ### Rotation matrix explained -->
 
 

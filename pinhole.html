@@ -546,7 +546,7 @@ f &amp; 0 &amp; o_x \\
 <section id="extrinsic-parameters-of-a-camera">
 <h2>Extrinsic parameters of a camera<a class="headerlink" href="#extrinsic-parameters-of-a-camera" title="Permalink to this headline">#</a></h2>
 <p>The extrinsic parameters come into picture, even before shooting an image. Where the camera is located and it’s angle. <strong>(Rotation and Translation)</strong>.</p>
-<p>These are the parameters that identify uniquely the transformation between the <code class="docutils literal notranslate"><span class="pre">unknown</span> <span class="pre">camera</span> <span class="pre">reference</span> <span class="pre">frame</span></code> and the <code class="docutils literal notranslate"><span class="pre">known</span> <span class="pre">world</span> <span class="pre">reference</span> <span class="pre">frame</span></code>.</p>
+<p>These are the parameters that identify uniquely the transformation between the <span class = 'high'>unknown camera reference frame</span> and the &lt;/span class=’high’&gt;known world reference frame.</span></p>
 <p>Determining these parameters includes:</p>
 <ol class="simple">
 <li><p>Finding the translation vector between the relative positions of the origins of the two reference frames.</p></li>
@@ -664,6 +664,66 @@ s = m_{31}X_w + m_{32}Y_w + m_{33}Z_w + m_{34}\end{split}\]</div>
 </figcaption>
 </figure>
 <p>where the first matrix is of size <span class="math notranslate nohighlight">\(2n \times 12\)</span> (<span class="math notranslate nohighlight">\(n\)</span> is the number of available points.)</p>
+<p>In the above homogeneous linear equation <span class="math notranslate nohighlight">\(Ax=0\)</span>, we know the values of image coordinates and the real-world coordinates. We are required for find the elements of the matrix <span class="math notranslate nohighlight">\(M\)</span>. The above equation has infinite solutions for <span class="math notranslate nohighlight">\(Ax = 0\)</span>, since we can randomly scale <span class="math notranslate nohighlight">\(x\)</span> with a scalar <span class="math notranslate nohighlight">\(\lambda\)</span> such that <span class="math notranslate nohighlight">\(A(\lambda x)= 0\)</span>. Therefore, we assume <span class="math notranslate nohighlight">\(||x||=1\)</span>, solving the equation can be converted to:</p>
+<div class="math notranslate nohighlight">
+\[
+min||Ax||
+\]</div>
+<p>The minimization problem can be solved with <span class = "high">Singular Value Decomposition (SVD)</span>. Assume that <span class="math notranslate nohighlight">\(A\)</span> can be decomposed to <span class="math notranslate nohighlight">\(U\Sigma V^T\)</span>, we have</p>
+<div class="math notranslate nohighlight">
+\[
+min||Ax|| = ||U \Sigma V^Tx|| = ||\Sigma V^Tx||
+\]</div>
+<p>Since <span class="math notranslate nohighlight">\(||V^Tx||=||x||=1\)</span>, then we have <span class="math notranslate nohighlight">\(min||Ax|| = ||\Sigma y||\)</span>.</p>
+<p>As <span class="math notranslate nohighlight">\(||y||=1\)</span>, <span class="math notranslate nohighlight">\(x\)</span> should be the last row of <span class="math notranslate nohighlight">\(V^T\)</span>.</p>
+<p>Once we have the matrix <span class="math notranslate nohighlight">\(M\)</span>,</p>
+<div class="math notranslate nohighlight" id="equation-m-matrix">
+<span class="eqno">(9)<a class="headerlink" href="#equation-m-matrix" title="Permalink to this equation">#</a></span>\[\begin{split}M = \begin{bmatrix}m_{11} &amp; m_{12} &amp; m_{13} &amp; m_{14}  \\
+m_{21} &amp; m_{22} &amp; m_{23} &amp; m_{24}  \\
+m_{31} &amp; m_{32} &amp; m_{33} &amp; m_{34}\end{bmatrix} = \begin{bmatrix} f_xr_{11}+o_xr_{31} &amp; f_x r_{12}+o_xr_{32} &amp; f_xr_{13}+o_xr_{33}&amp;f_xT_x+o_xT_z \\
+f_y r_{21}+o_yr_{31} &amp; f_yr_{22}+ o_y r_{32} &amp; f_yr_{23}+o_yr_{33} &amp; f_yT_y+o_yT_z \\
+r_{31} &amp; r_{32} &amp; r_{33} &amp; T_z\end{bmatrix}\end{split}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(M\)</span> is the projection matrix. Let’s define</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+m_1 &amp;= (m_{11}, m_{12}, m_{13})^T \\ 
+m_2 &amp;= (m_{21}, m_{22}, m_{23})^T \\
+m_3 &amp;= (m_{31}, m_{32}, m_{33})^T \\
+m_4 &amp;= (m_{14}, m_{24}, m_{34})^T
+\end{align}
+\end{split}\]</div>
+<p>Also we define,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+r_1 &amp;= (r_{11}, r_{12}, r_{13})^T \\
+r_2 &amp;= (r_{21}, r_{22}, r_{23})^T \\
+r_3 &amp;= (r_{31}, r_{32}, r_{33})^T
+\end{align}
+\end{split}\]</div>
+<p>Observe that <span class="math notranslate nohighlight">\((r_1, r_2, r_3)\)</span> is the rotation matrix, then</p>
+<div class="math notranslate nohighlight" id="equation-rotation-m">
+<span class="eqno">(10)<a class="headerlink" href="#equation-rotation-m" title="Permalink to this equation">#</a></span>\[\begin{split}(r_1, r_2, r_3) \begin{pmatrix}
+r_1^T\\
+r_2^T\\
+r_3^T 
+\end{pmatrix} = \begin{pmatrix}
+1 &amp; 0 &amp; 0\\ 
+0 &amp; 1 &amp; 0\\ 
+0 &amp; 0 &amp; 1
+\end{pmatrix}\end{split}\]</div>
+<p>Then we have <span class="math notranslate nohighlight">\(r_i^Tr_i = 1, r_i^Tr_j=0 \enspace (i \neq j)\)</span>.</p>
+<p>From <span class="math notranslate nohighlight">\(M\)</span> we have,</p>
+<div class="math notranslate nohighlight">
+\[
+m_1^Tm_3 = o_x \]</div>
+<div class="math notranslate nohighlight">
+\[m_1^Tm_1 = f_x^2+o_x^2\]</div>
+<div class="math notranslate nohighlight">
+\[o_x = m_1^Tm_3, \enspace o_y = m_2^Tm_3\]</div>
+<div class="math notranslate nohighlight">
+\[f_x = \sqrt{m_1^Tm_1 - o_x^2}, \enspace f_y = \sqrt{m_2^Tm_2 - o_y^2}\]</div>
 <!-- ### Rotation matrix explained -->
 </section>
 </section>
