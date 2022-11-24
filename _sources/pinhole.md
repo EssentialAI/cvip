@@ -30,7 +30,7 @@ This section aims at answering the above questions while providing a detailed ex
    2. Category recognition
    3. Image segmentation
 
-To model a camera, one must make sure to preserve both geometry and semantics. Some applications of computer vision include but not limited to [Single View modelling](https://www.semanticscholar.org/paper/Single-view-modeling-of-free-form-scenes-Zhang-Dugas-Phocion/0193a8ca0dc5c34cb81cccb8070666d6275738c7), Detection and Recognition, [Visual Question and Answering](https://www.sciencedirect.com/science/article/pii/S1077314217301170), Optical Character Recognition, Entertainment (e.g., Snapchat), Shape Reconstruction using depth sensors, [Building rome in a day!](https://grail.cs.washington.edu/rome/), 3D Scanning, Medical Imaging and so on.
+To model a camera, one must make sure to preserve both geometry and semantics of the scene. Some applications of computer vision include but not limited to [Single View modelling](https://www.semanticscholar.org/paper/Single-view-modeling-of-free-form-scenes-Zhang-Dugas-Phocion/0193a8ca0dc5c34cb81cccb8070666d6275738c7), Detection and Recognition, [Visual Question and Answering](https://www.sciencedirect.com/science/article/pii/S1077314217301170), Optical Character Recognition, Entertainment (e.g., Snapchat), Shape Reconstruction using depth sensors, [Building rome in a day!](https://grail.cs.washington.edu/rome/), 3D Scanning, Medical Imaging and so on.
 
 # Image Formation
 
@@ -212,7 +212,7 @@ $s$ - skew of the sensor pixel, i.e., if the pixel is a parallelogram and not a 
 ## Extrinsic parameters of a camera
 The extrinsic parameters come into picture, even before shooting an image. Where the camera is located and it's angle. **(Rotation and Translation)**.
 
-These are the parameters that identify uniquely the transformation between the <span class = 'high'>unknown camera reference frame</span> and the </span class='high'>known world reference frame.</span>
+These are the parameters that identify uniquely the transformation between the <span class = 'high'>unknown camera reference frame</span> and the <span class='high'>known world reference frame.</span>
 
 Determining these parameters includes:
 1. Finding the translation vector between the relative positions of the origins of the two reference frames.
@@ -293,7 +293,7 @@ Camera is nothing but a 3D point to 2D point mapping function that has 11 parame
 
 ## 3D to 2D mapping (both intrinsic and extrinsic)
 
-1. Given an image of an object, we would like to find the ntrinsic and extrinsic parameters of a camera.
+1. Given an image of an object, we would like to find the intrinsic and extrinsic parameters of a camera.
 2. With these intrinsic and extrinsic parameters, we want to use the camera to map any 3D point in the real world to a 2D coordinate on the image plane.
 
 $$
@@ -436,6 +436,9 @@ $$m_1^Tm_1 = f_x^2+o_x^2$$
 $$o_x = m_1^Tm_3, \enspace o_y = m_2^Tm_3$$
 
 $$f_x = \sqrt{m_1^Tm_1 - o_x^2}, \enspace f_y = \sqrt{m_2^Tm_2 - o_y^2}$$
+
+# Summary
+This chapter discusses about the pinhole camera model. The intrinsic and extrinsic camera paramters. Given a 3D world coordinates of an object, a camera performs a 3D $\rightarrow$ 2D mapping of the point onto an image plane. There are a total of 11 paramters for any camera to perform this perspective projection mapping.
 
 
 

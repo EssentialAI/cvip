@@ -129,6 +129,16 @@ const thebe_selector_output = ".output, .cell_output"
    CVIP Project 1
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://essentialai.github.io/rl">
+   Reinforcement Learning notes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://essentialai.github.io">
+   The EssentialAI blog
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -304,6 +314,11 @@ title="Print to PDF"
    </li>
   </ul>
  </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
 </ul>
 
     </nav>
@@ -366,6 +381,11 @@ title="Print to PDF"
    </li>
   </ul>
  </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
 </ul>
 
                         </nav>
@@ -409,7 +429,7 @@ title="Print to PDF"
 </ol>
 </li>
 </ol>
-<p>To model a camera, one must make sure to preserve both geometry and semantics. Some applications of computer vision include but not limited to <a class="reference external" href="https://www.semanticscholar.org/paper/Single-view-modeling-of-free-form-scenes-Zhang-Dugas-Phocion/0193a8ca0dc5c34cb81cccb8070666d6275738c7">Single View modelling</a>, Detection and Recognition, <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S1077314217301170">Visual Question and Answering</a>, Optical Character Recognition, Entertainment (e.g., Snapchat), Shape Reconstruction using depth sensors, <a class="reference external" href="https://grail.cs.washington.edu/rome/">Building rome in a day!</a>, 3D Scanning, Medical Imaging and so on.</p>
+<p>To model a camera, one must make sure to preserve both geometry and semantics of the scene. Some applications of computer vision include but not limited to <a class="reference external" href="https://www.semanticscholar.org/paper/Single-view-modeling-of-free-form-scenes-Zhang-Dugas-Phocion/0193a8ca0dc5c34cb81cccb8070666d6275738c7">Single View modelling</a>, Detection and Recognition, <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S1077314217301170">Visual Question and Answering</a>, Optical Character Recognition, Entertainment (e.g., Snapchat), Shape Reconstruction using depth sensors, <a class="reference external" href="https://grail.cs.washington.edu/rome/">Building rome in a day!</a>, 3D Scanning, Medical Imaging and so on.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="image-formation">
 <h1>Image Formation<a class="headerlink" href="#image-formation" title="Permalink to this headline">#</a></h1>
@@ -546,7 +566,7 @@ f &amp; 0 &amp; o_x \\
 <section id="extrinsic-parameters-of-a-camera">
 <h2>Extrinsic parameters of a camera<a class="headerlink" href="#extrinsic-parameters-of-a-camera" title="Permalink to this headline">#</a></h2>
 <p>The extrinsic parameters come into picture, even before shooting an image. Where the camera is located and it’s angle. <strong>(Rotation and Translation)</strong>.</p>
-<p>These are the parameters that identify uniquely the transformation between the <span class = 'high'>unknown camera reference frame</span> and the &lt;/span class=’high’&gt;known world reference frame.</span></p>
+<p>These are the parameters that identify uniquely the transformation between the <span class = 'high'>unknown camera reference frame</span> and the <span class='high'>known world reference frame.</span></p>
 <p>Determining these parameters includes:</p>
 <ol class="simple">
 <li><p>Finding the translation vector between the relative positions of the origins of the two reference frames.</p></li>
@@ -609,7 +629,7 @@ Z_c = R_3^T(P_w-T)
 <section id="d-to-2d-mapping-both-intrinsic-and-extrinsic">
 <h2>3D to 2D mapping (both intrinsic and extrinsic)<a class="headerlink" href="#d-to-2d-mapping-both-intrinsic-and-extrinsic" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
-<li><p>Given an image of an object, we would like to find the ntrinsic and extrinsic parameters of a camera.</p></li>
+<li><p>Given an image of an object, we would like to find the intrinsic and extrinsic parameters of a camera.</p></li>
 <li><p>With these intrinsic and extrinsic parameters, we want to use the camera to map any 3D point in the real world to a 2D coordinate on the image plane.</p></li>
 </ol>
 <div class="math notranslate nohighlight">
@@ -724,9 +744,13 @@ m_1^Tm_3 = o_x \]</div>
 \[o_x = m_1^Tm_3, \enspace o_y = m_2^Tm_3\]</div>
 <div class="math notranslate nohighlight">
 \[f_x = \sqrt{m_1^Tm_1 - o_x^2}, \enspace f_y = \sqrt{m_2^Tm_2 - o_y^2}\]</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="summary">
+<h1>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h1>
+<p>This chapter discusses about the pinhole camera model. The intrinsic and extrinsic camera paramters. Given a 3D world coordinates of an object, a camera performs a 3D <span class="math notranslate nohighlight">\(\rightarrow\)</span> 2D mapping of the point onto an image plane. There are a total of 11 paramters for any camera to perform this perspective projection mapping.</p>
 <!-- ### Rotation matrix explained -->
-</section>
-</section>
 </section>
 
     <script type="text/x-thebe-config">
