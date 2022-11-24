@@ -160,7 +160,7 @@ $X,Y,Z$ are the relative coordinates of a 3D point from the camera origin. This 
 ```
 This leads us to the question, What about the values of $x,y$? These pixel values are relative to the origin `Principal point` of the image plane. Typically the origin of an image is located at the bottom left or the top left.
 
-Hence, there is a need to make sure the principal point overlaps with the image origin, and we add an **offset** $p_x$ and $p_y$ within the image plane to resolve this issue. **Keep in mind that this offset is not caused by the movement of the object or the camera. It an intrinsic parameter of every camera.**
+Hence, there is a need to make sure the principal point overlaps with the image origin, and we add an **offset** $o_x$ and $o_y$ within the image plane to resolve this issue. **Keep in mind that this offset is not caused by the movement of the object or the camera. It an intrinsic parameter of every camera.**
 
 The {eq}`second_eq` becomes:
 
@@ -168,12 +168,12 @@ The {eq}`second_eq` becomes:
 :label: third_eq
 
 \begin{pmatrix}
-fX + Zp_x \\
-fY + Zp_y\\
+fX + Zo_x \\
+fY + Zo_y\\
 Z
 \end{pmatrix} = \begin{bmatrix}
-f & 0 & p_x & 0\\
-0 & f & p_y  & 0\\
+f & 0 & o_x & 0\\
+0 & f & o_y  & 0\\
 0 & 0 & 1 & 0
 \end{bmatrix}\begin{pmatrix}
 X\\
@@ -184,8 +184,8 @@ Z\\
 ```
 $$
 K = \begin{bmatrix}
-f & 0 & p_x \\
-0 & f & p_y  \\
+f & 0 & o_x \\
+0 & f & o_y  \\
 0 & 0 & 1 
 \end{bmatrix}
 $$
@@ -197,8 +197,8 @@ There is an advanced version of the above matrix. It is called Camera Calibratio
 ```{math}
 :label: intrinsic_eq
 K = \begin{bmatrix}
-\gamma f & s & p_x \\
-0 & f & p_y  \\
+\gamma f & s & o_x \\
+0 & f & o_y  \\
 0 & 0 & 1 
 \end{bmatrix}
 ```
@@ -293,8 +293,72 @@ Camera is nothing but a 3D point to 2D point mapping function that has 11 parame
 
 ## 3D to 2D mapping (both intrinsic and extrinsic)
 
+1. Given an image of an object, we would like to find the ntrinsic and extrinsic parameters of a camera.
+2. With these intrinsic and extrinsic parameters, we want to use the camera to map any 3D point in the real world to a 2D coordinate on the image plane.
 
+$$
+\begin{bmatrix}
+X_c\\ 
+Y_c\\ 
+Z_c
+\end{bmatrix} = \begin{bmatrix}
+r_{11} & r_{12} & r_{13}  \\
+r_{21} & r_{22} & r_{23}   \\
+r_{31} & r_{32} & r_{33} 
+\end{bmatrix} \begin{bmatrix}
+X_w \\
+Y_w \\
+Z_w
+\end{bmatrix} + \begin{bmatrix}T_x \\
+T_y \\
+T_z \end{bmatrix}
+$$
 
+$[X_c, Y_c, Z_c]^T$ are the image coordinates and $[X_w, Y_w, Z_w]^T$ are the world coordinates. $[T_x, T_y, T_z]^T$ is the translation vector.
+
+The intrinsic and extrinsic parameters combine to form the matrix $M$.
+
+$$
+M = M_{in}.M_{ex} = \begin{bmatrix}m_{11} & m_{12} & m_{13} & m_{14}  \\
+m_{21} & m_{22} & m_{23} & m_{24}  \\
+m_{31} & m_{32} & m_{33} & m_{34} \end{bmatrix}
+$$
+
+#### Intuition behind the 3D $\rightarrow$ 2D mapping in a camera.
+
+```{math}
+:label: mapping_matrix
+
+s\begin{bmatrix}x\\
+y\\
+1
+\end{bmatrix} = \begin{bmatrix}m_{11} & m_{12} & m_{13} & m_{14}  \\
+m_{21} & m_{22} & m_{23} & m_{24}  \\
+m_{31} & m_{32} & m_{33} & m_{34}\end{bmatrix} \cdot \begin{bmatrix} X_w \\
+Y_w \\
+Z_w \\
+1\end{bmatrix}
+```
+
+Let's suppose, you have $n$ image coordinates of a camera and their corresponding world coordinates. Our aim to find the matrix $M$. <span class = 'high'>From {eq}`mapping_matrix`, we have:</span>
+
+$$
+sx = m_{11}X_w + m_{12}Y_w + m_{13}Z_w + m_{14} \\
+sy = m_{21}X_w + m_{22}Y_w + m_{23}Z_w + m_{24} \\
+s = m_{31}X_w + m_{32}Y_w + m_{33}Z_w + m_{34}$$
+
+To solve for the matrix $M$,
+
+```{figure} /imgs/matrix_m.PNG
+
+---
+height: 150px
+name: matrix_m
+---
+
+Solving for the matrix $M$
+```
+where the first matrix is of size $2n \times 12$ ($n$ is the number of available points.)
 <!-- ### Rotation matrix explained -->
 
 

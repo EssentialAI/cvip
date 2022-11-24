@@ -43,7 +43,6 @@
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -54,6 +53,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="canonical" href="https://essentialai.github.io/cvip/pinhole.html" />
     <link rel="shortcut icon" href="_static/brain1.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -280,6 +280,22 @@ title="Print to PDF"
      Extrinsic parameters of a camera
     </a>
    </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#d-to-2d-mapping-both-intrinsic-and-extrinsic">
+     3D to 2D mapping (both intrinsic and extrinsic)
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#intuition-behind-the-3d-rightarrow-2d-mapping-in-a-camera">
+       Intuition behind the 3D
+       <span class="math notranslate nohighlight">
+        \(\rightarrow\)
+       </span>
+       2D mapping in a camera.
+      </a>
+     </li>
+    </ul>
+   </li>
   </ul>
  </li>
 </ul>
@@ -325,6 +341,22 @@ title="Print to PDF"
     <a class="reference internal nav-link" href="#extrinsic-parameters-of-a-camera">
      Extrinsic parameters of a camera
     </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#d-to-2d-mapping-both-intrinsic-and-extrinsic">
+     3D to 2D mapping (both intrinsic and extrinsic)
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#intuition-behind-the-3d-rightarrow-2d-mapping-in-a-camera">
+       Intuition behind the 3D
+       <span class="math notranslate nohighlight">
+        \(\rightarrow\)
+       </span>
+       2D mapping in a camera.
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -468,16 +500,16 @@ Z\\
 <p><span class="math notranslate nohighlight">\(X,Y,Z\)</span> are the relative coordinates of a 3D point from the camera origin. This means that when the object is moved or the camera is moved, the values of <span class="math notranslate nohighlight">\(X,Y,Z\)</span> change.</p>
 </div>
 <p>This leads us to the question, What about the values of <span class="math notranslate nohighlight">\(x,y\)</span>? These pixel values are relative to the origin <code class="docutils literal notranslate"><span class="pre">Principal</span> <span class="pre">point</span></code> of the image plane. Typically the origin of an image is located at the bottom left or the top left.</p>
-<p>Hence, there is a need to make sure the principal point overlaps with the image origin, and we add an <strong>offset</strong> <span class="math notranslate nohighlight">\(p_x\)</span> and <span class="math notranslate nohighlight">\(p_y\)</span> within the image plane to resolve this issue. <strong>Keep in mind that this offset is not caused by the movement of the object or the camera. It an intrinsic parameter of every camera.</strong></p>
+<p>Hence, there is a need to make sure the principal point overlaps with the image origin, and we add an <strong>offset</strong> <span class="math notranslate nohighlight">\(o_x\)</span> and <span class="math notranslate nohighlight">\(o_y\)</span> within the image plane to resolve this issue. <strong>Keep in mind that this offset is not caused by the movement of the object or the camera. It an intrinsic parameter of every camera.</strong></p>
 <p>The <a class="reference internal" href="#equation-second-eq">(2)</a> becomes:</p>
 <div class="math notranslate nohighlight" id="equation-third-eq">
 <span class="eqno">(3)<a class="headerlink" href="#equation-third-eq" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{pmatrix}
-fX + Zp_x \\
-fY + Zp_y\\
+fX + Zo_x \\
+fY + Zo_y\\
 Z
 \end{pmatrix} = \begin{bmatrix}
-f &amp; 0 &amp; p_x &amp; 0\\
-0 &amp; f &amp; p_y  &amp; 0\\
+f &amp; 0 &amp; o_x &amp; 0\\
+0 &amp; f &amp; o_y  &amp; 0\\
 0 &amp; 0 &amp; 1 &amp; 0
 \end{bmatrix}\begin{pmatrix}
 X\\
@@ -488,8 +520,8 @@ Z\\
 <div class="math notranslate nohighlight">
 \[\begin{split}
 K = \begin{bmatrix}
-f &amp; 0 &amp; p_x \\
-0 &amp; f &amp; p_y  \\
+f &amp; 0 &amp; o_x \\
+0 &amp; f &amp; o_y  \\
 0 &amp; 0 &amp; 1 
 \end{bmatrix}
 \end{split}\]</div>
@@ -497,8 +529,8 @@ f &amp; 0 &amp; p_x \\
 <p>There is an advanced version of the above matrix. It is called Camera Calibration matrix.</p>
 <div class="math notranslate nohighlight" id="equation-intrinsic-eq">
 <span class="eqno">(4)<a class="headerlink" href="#equation-intrinsic-eq" title="Permalink to this equation">#</a></span>\[\begin{split}K = \begin{bmatrix}
-\gamma f &amp; s &amp; p_x \\
-0 &amp; f &amp; p_y  \\
+\gamma f &amp; s &amp; o_x \\
+0 &amp; f &amp; o_y  \\
 0 &amp; 0 &amp; 1 
 \end{bmatrix}\end{split}\]</div>
 <p><span class="math notranslate nohighlight">\(\gamma\)</span> - when you zoom in and zoom out, the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> co-ordinates are changed proportionally. However if there is an unproportional change in <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> axes, <span class="math notranslate nohighlight">\(\gamma\)</span> takes care of that. <span class="math notranslate nohighlight">\(\gamma\)</span> is also called the <code class="docutils literal notranslate"><span class="pre">aspect</span> <span class="pre">ratio</span></code> of the pixel.</p>
@@ -563,6 +595,71 @@ Y_c = R_2^T(P_w-T) \\
 Z_c = R_3^T(P_w-T)
 \end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(R_i^T\)</span> corresponds to the <span class="math notranslate nohighlight">\(i^{th}\)</span> row of the rotation matrix.</p>
+<div class="tip admonition">
+<p class="admonition-title">What is a camera?</p>
+<p>Camera is nothing but a 3D point to 2D point mapping function that has 11 parameters (intrinsic and extrinsic).</p>
+</div>
+</section>
+<section id="d-to-2d-mapping-both-intrinsic-and-extrinsic">
+<h2>3D to 2D mapping (both intrinsic and extrinsic)<a class="headerlink" href="#d-to-2d-mapping-both-intrinsic-and-extrinsic" title="Permalink to this headline">#</a></h2>
+<ol class="simple">
+<li><p>Given an image of an object, we would like to find the ntrinsic and extrinsic parameters of a camera.</p></li>
+<li><p>With these intrinsic and extrinsic parameters, we want to use the camera to map any 3D point in the real world to a 2D coordinate on the image plane.</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+X_c\\ 
+Y_c\\ 
+Z_c
+\end{bmatrix} = \begin{bmatrix}
+r_{11} &amp; r_{12} &amp; r_{13}  \\
+r_{21} &amp; r_{22} &amp; r_{23}   \\
+r_{31} &amp; r_{32} &amp; r_{33} 
+\end{bmatrix} \begin{bmatrix}
+X_w \\
+Y_w \\
+Z_w
+\end{bmatrix} + \begin{bmatrix}T_x \\
+T_y \\
+T_z \end{bmatrix}
+\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\([X_c, Y_c, Z_c]^T\)</span> are the image coordinates and <span class="math notranslate nohighlight">\([X_w, Y_w, Z_w]^T\)</span> are the world coordinates. <span class="math notranslate nohighlight">\([T_x, T_y, T_z]^T\)</span> is the translation vector.</p>
+<p>The intrinsic and extrinsic parameters combine to form the matrix <span class="math notranslate nohighlight">\(M\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+M = M_{in}.M_{ex} = \begin{bmatrix}m_{11} &amp; m_{12} &amp; m_{13} &amp; m_{14}  \\
+m_{21} &amp; m_{22} &amp; m_{23} &amp; m_{24}  \\
+m_{31} &amp; m_{32} &amp; m_{33} &amp; m_{34} \end{bmatrix}
+\end{split}\]</div>
+<section id="intuition-behind-the-3d-rightarrow-2d-mapping-in-a-camera">
+<h3>Intuition behind the 3D <span class="math notranslate nohighlight">\(\rightarrow\)</span> 2D mapping in a camera.<a class="headerlink" href="#intuition-behind-the-3d-rightarrow-2d-mapping-in-a-camera" title="Permalink to this headline">#</a></h3>
+<div class="math notranslate nohighlight" id="equation-mapping-matrix">
+<span class="eqno">(8)<a class="headerlink" href="#equation-mapping-matrix" title="Permalink to this equation">#</a></span>\[\begin{split}s\begin{bmatrix}x\\
+y\\
+1
+\end{bmatrix} = \begin{bmatrix}m_{11} &amp; m_{12} &amp; m_{13} &amp; m_{14}  \\
+m_{21} &amp; m_{22} &amp; m_{23} &amp; m_{24}  \\
+m_{31} &amp; m_{32} &amp; m_{33} &amp; m_{34}\end{bmatrix} \cdot \begin{bmatrix} X_w \\
+Y_w \\
+Z_w \\
+1\end{bmatrix}\end{split}\]</div>
+<p>Let’s suppose, you have <span class="math notranslate nohighlight">\(n\)</span> image coordinates of a camera and their corresponding world coordinates. Our aim to find the matrix <span class="math notranslate nohighlight">\(M\)</span>. <span class = 'high'>From <a class="reference internal" href="#equation-mapping-matrix">(8)</a>, we have:</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+sx = m_{11}X_w + m_{12}Y_w + m_{13}Z_w + m_{14} \\
+sy = m_{21}X_w + m_{22}Y_w + m_{23}Z_w + m_{24} \\
+s = m_{31}X_w + m_{32}Y_w + m_{33}Z_w + m_{34}\end{split}\]</div>
+<p>To solve for the matrix <span class="math notranslate nohighlight">\(M\)</span>,</p>
+<figure class="align-default" id="id5">
+<img alt="_images/matrix_m.PNG" src="_images/matrix_m.PNG" />
+<figcaption>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Solving for the matrix <span class="math notranslate nohighlight">\(M\)</span></span><a class="headerlink" href="#id5" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>where the first matrix is of size <span class="math notranslate nohighlight">\(2n \times 12\)</span> (<span class="math notranslate nohighlight">\(n\)</span> is the number of available points.)</p>
+<!-- ### Rotation matrix explained -->
+</section>
 </section>
 </section>
 
