@@ -5,3 +5,8 @@ format: jb-book
 root: intro
 chapters:
   - file: pinhole
+  - file: CVIP_Project1.ipynb
+  # - url : https://essentialai.github.io/rl
+  #   title: Reinforcement Learning notes
+  # - url: https://essentialai.github.io
+  #   title : The EssentialAI blog

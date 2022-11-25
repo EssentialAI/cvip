@@ -30,7 +30,7 @@ This section aims at answering the above questions while providing a detailed ex
    2. Category recognition
    3. Image segmentation
 
-To model a camera, one must make sure to preserve both geometry and semantics. Some applications of computer vision include but not limited to [Single View modelling](https://www.semanticscholar.org/paper/Single-view-modeling-of-free-form-scenes-Zhang-Dugas-Phocion/0193a8ca0dc5c34cb81cccb8070666d6275738c7), Detection and Recognition, [Visual Question and Answering](https://www.sciencedirect.com/science/article/pii/S1077314217301170), Optical Character Recognition, Entertainment (e.g., Snapchat), Shape Reconstruction using depth sensors, [Building rome in a day!](https://grail.cs.washington.edu/rome/), 3D Scanning, Medical Imaging and so on.
+To model a camera, one must make sure to preserve both geometry and semantics of the scene. Some applications of computer vision include but not limited to [Single View modelling](https://www.semanticscholar.org/paper/Single-view-modeling-of-free-form-scenes-Zhang-Dugas-Phocion/0193a8ca0dc5c34cb81cccb8070666d6275738c7), Detection and Recognition, [Visual Question and Answering](https://www.sciencedirect.com/science/article/pii/S1077314217301170), Optical Character Recognition, Entertainment (e.g., Snapchat), Shape Reconstruction using depth sensors, [Building rome in a day!](https://grail.cs.washington.edu/rome/), 3D Scanning, Medical Imaging and so on.
 
 # Image Formation
 
@@ -190,6 +190,17 @@ f & 0 & o_x \\
 \end{bmatrix}
 $$
 
+The focal length $f$ need not be same along the $x$ and $y$ axes always. A general form of the projection matrix is:
+
+```{math}
+:label: projection_matrix
+K = \begin{bmatrix}
+f_x & 0 & o_x \\
+0 & f_y & o_y  \\
+0 & 0 & 1 
+\end{bmatrix}
+```
+
 **This is the (Intrinsic) calibration matrix.**
 
 There is an advanced version of the above matrix. It is called Camera Calibration matrix.
@@ -197,8 +208,8 @@ There is an advanced version of the above matrix. It is called Camera Calibratio
 ```{math}
 :label: intrinsic_eq
 K = \begin{bmatrix}
-\gamma f & s & o_x \\
-0 & f & o_y  \\
+\gamma f_x & s & o_x \\
+0 & f_y & o_y  \\
 0 & 0 & 1 
 \end{bmatrix}
 ```
@@ -212,7 +223,7 @@ $s$ - skew of the sensor pixel, i.e., if the pixel is a parallelogram and not a 
 ## Extrinsic parameters of a camera
 The extrinsic parameters come into picture, even before shooting an image. Where the camera is located and it's angle. **(Rotation and Translation)**.
 
-These are the parameters that identify uniquely the transformation between the `unknown camera reference frame` and the `known world reference frame`.
+These are the parameters that identify uniquely the transformation between the <span class = 'high'>unknown camera reference frame</span> and the <span class='high'>known world reference frame.</span>
 
 Determining these parameters includes:
 1. Finding the translation vector between the relative positions of the origins of the two reference frames.
@@ -293,28 +304,48 @@ Camera is nothing but a 3D point to 2D point mapping function that has 11 parame
 
 ## 3D to 2D mapping (both intrinsic and extrinsic)
 
-1. Given an image of an object, we would like to find the ntrinsic and extrinsic parameters of a camera.
+1. Given an image of an object, we would like to find the intrinsic and extrinsic parameters of a camera.
 2. With these intrinsic and extrinsic parameters, we want to use the camera to map any 3D point in the real world to a 2D coordinate on the image plane.
 
 $$
-\begin{bmatrix}
-X_c\\ 
-Y_c\\ 
-Z_c
+s\begin{bmatrix}x\\
+y\\
+1
 \end{bmatrix} = \begin{bmatrix}
-r_{11} & r_{12} & r_{13}  \\
-r_{21} & r_{22} & r_{23}   \\
-r_{31} & r_{32} & r_{33} 
-\end{bmatrix} \begin{bmatrix}
-X_w \\
+\gamma f_x & s & o_x \\
+0 & f_y & o_y  \\
+0 & 0 & 1 
+\end{bmatrix} \begin{bmatrix} 1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0& 1& 0\end{bmatrix} \begin{bmatrix}R_{3 \times 3} & 0_{3 \times 1} \\
+0_{1 \times 3} & 1\end{bmatrix} \begin{bmatrix} I_{3 \times 3} & T_{3 \times 1} \\
+0_{1 \times 3} & 1\end{bmatrix}\begin{bmatrix} X_w \\
 Y_w \\
-Z_w
-\end{bmatrix} + \begin{bmatrix}T_x \\
-T_y \\
-T_z \end{bmatrix}
+Z_w \\
+1\end{bmatrix}
 $$
 
-$[X_c, Y_c, Z_c]^T$ are the image coordinates and $[X_w, Y_w, Z_w]^T$ are the world coordinates. $[T_x, T_y, T_z]^T$ is the translation vector.
+```{math}
+:label: projection
+
+s\begin{bmatrix}x\\
+y\\
+1
+\end{bmatrix} = \begin{bmatrix}
+f_x & 0 & o_x \\
+0 & f_y & o_y  \\
+0 & 0 & 1 
+\end{bmatrix} \begin{bmatrix}
+r_{11} & r_{12} & r_{13} & T_x \\
+r_{21} & r_{22} & r_{23} & T_y  \\
+r_{31} & r_{32} & r_{33} & T_z
+\end{bmatrix} \begin{bmatrix} X_w \\
+Y_w \\
+Z_w \\
+1\end{bmatrix}
+```
+
+$[x, y]^T$ are the image coordinates and $[X_w, Y_w, Z_w]^T$ are the world coordinates. $T_{3 \times 1} = [T_x, T_y, T_z]^T$ is the translation vector.
 
 The intrinsic and extrinsic parameters combine to form the matrix $M$.
 
@@ -359,6 +390,91 @@ name: matrix_m
 Solving for the matrix $M$
 ```
 where the first matrix is of size $2n \times 12$ ($n$ is the number of available points.)
+
+In the above homogeneous linear equation $Ax=0$, we know the values of image coordinates and the real-world coordinates. We are required for find the elements of the matrix $M$. The above equation has infinite solutions for $Ax = 0$, since we can randomly scale $x$ with a scalar $\lambda$ such that $A(\lambda x)= 0$. Therefore, we assume $||x||=1$, solving the equation can be converted to:
+
+$$
+min||Ax||
+$$
+
+The minimization problem can be solved with <span class = "high">Singular Value Decomposition (SVD)</span>. Assume that $A$ can be decomposed to $U\Sigma V^T$, we have
+
+$$
+min||Ax|| = ||U \Sigma V^Tx|| = ||\Sigma V^Tx||
+$$
+
+Since $||V^Tx||=||x||=1$, then we have $min||Ax|| = ||\Sigma y||$.
+
+As $||y||=1$, $x$ should be the last row of $V^T$.
+
+Once we have the matrix $M$, 
+
+```{math}
+:label: m_matrix
+M = \begin{bmatrix}m_{11} & m_{12} & m_{13} & m_{14}  \\
+m_{21} & m_{22} & m_{23} & m_{24}  \\
+m_{31} & m_{32} & m_{33} & m_{34}\end{bmatrix} = \begin{bmatrix} f_xr_{11}+o_xr_{31} & f_x r_{12}+o_xr_{32} & f_xr_{13}+o_xr_{33}&f_xT_x+o_xT_z \\
+f_y r_{21}+o_yr_{31} & f_yr_{22}+ o_y r_{32} & f_yr_{23}+o_yr_{33} & f_yT_y+o_yT_z \\
+r_{31} & r_{32} & r_{33} & T_z\end{bmatrix}
+```
+
+Here, $M$ is the projection matrix. Let's define 
+
+$$
+\begin{align}
+m_1 &= (m_{11}, m_{12}, m_{13})^T \\ 
+m_2 &= (m_{21}, m_{22}, m_{23})^T \\
+m_3 &= (m_{31}, m_{32}, m_{33})^T \\
+m_4 &= (m_{14}, m_{24}, m_{34})^T
+\end{align}
+$$
+
+Also we define,
+
+$$
+\begin{align}
+r_1 &= (r_{11}, r_{12}, r_{13})^T \\
+r_2 &= (r_{21}, r_{22}, r_{23})^T \\
+r_3 &= (r_{31}, r_{32}, r_{33})^T
+\end{align}
+$$
+
+Observe that $(r_1, r_2, r_3)$ is the rotation matrix, then
+
+```{math}
+:label: rotation_m
+
+(r_1, r_2, r_3) \begin{pmatrix}
+r_1^T\\
+r_2^T\\
+r_3^T 
+\end{pmatrix} = \begin{pmatrix}
+1 & 0 & 0\\ 
+0 & 1 & 0\\ 
+0 & 0 & 1
+\end{pmatrix}
+```
+
+Then we have $r_i^Tr_i = 1, r_i^Tr_j=0 \enspace (i \neq j)$.
+
+From $M$ we have,
+
+$$
+m_1^Tm_3 = o_x $$
+
+$$m_1^Tm_1 = f_x^2+o_x^2$$
+
+$$o_x = m_1^Tm_3, \enspace o_y = m_2^Tm_3$$
+
+$$f_x = \sqrt{m_1^Tm_1 - o_x^2}, \enspace f_y = \sqrt{m_2^Tm_2 - o_y^2}$$
+
+# Summary
+This chapter discusses about the pinhole camera model. The intrinsic and extrinsic camera paramters. Given a 3D world coordinates of an object, a camera performs a 3D $\rightarrow$ 2D mapping of the point onto an image plane. There are a total of 11 paramters for any camera to perform this perspective projection mapping.
+
+This chapter also explains the mathematics used to find the intrinsic and extrinsic parameters of a camera using image coordinates and world coordinates. Given an image of an object, and $n$ world coordinates and image coordinates, we discuss the mathematics to find the matrix $M = M_{in}\cdot M_{ex}$ that would help us map any 3D point in real world to a 2D point on image plane.
+
+The next chapter provides the code for the above mathematics. We use chessboard corners as objects and try to find the intrinsic and extrinsic parameters of a given camera.
+
 <!-- ### Rotation matrix explained -->
 
 
