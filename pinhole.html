@@ -57,7 +57,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="_static/brain1.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="CVIP Project 1" href="CVIP_Project1.html" />
+    <link rel="next" title="CVIP-project-1" href="CVIP_Project1.html" />
     <link rel="prev" title="Computer Vision and Image Processing" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -126,17 +126,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="CVIP_Project1.html">
-   CVIP Project 1
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference external" href="https://essentialai.github.io/rl">
-   Reinforcement Learning notes
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference external" href="https://essentialai.github.io">
-   The EssentialAI blog
+   CVIP-project-1
   </a>
  </li>
 </ul>
@@ -551,17 +541,24 @@ f &amp; 0 &amp; o_x \\
 0 &amp; 0 &amp; 1 
 \end{bmatrix}
 \end{split}\]</div>
+<p>The focal length <span class="math notranslate nohighlight">\(f\)</span> need not be same along the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> axes always. A general form of the projection matrix is:</p>
+<div class="math notranslate nohighlight" id="equation-projection-matrix">
+<span class="eqno">(4)<a class="headerlink" href="#equation-projection-matrix" title="Permalink to this equation">#</a></span>\[\begin{split}K = \begin{bmatrix}
+f_x &amp; 0 &amp; o_x \\
+0 &amp; f_y &amp; o_y  \\
+0 &amp; 0 &amp; 1 
+\end{bmatrix}\end{split}\]</div>
 <p><strong>This is the (Intrinsic) calibration matrix.</strong></p>
 <p>There is an advanced version of the above matrix. It is called Camera Calibration matrix.</p>
 <div class="math notranslate nohighlight" id="equation-intrinsic-eq">
-<span class="eqno">(4)<a class="headerlink" href="#equation-intrinsic-eq" title="Permalink to this equation">#</a></span>\[\begin{split}K = \begin{bmatrix}
-\gamma f &amp; s &amp; o_x \\
-0 &amp; f &amp; o_y  \\
+<span class="eqno">(5)<a class="headerlink" href="#equation-intrinsic-eq" title="Permalink to this equation">#</a></span>\[\begin{split}K = \begin{bmatrix}
+\gamma f_x &amp; s &amp; o_x \\
+0 &amp; f_y &amp; o_y  \\
 0 &amp; 0 &amp; 1 
 \end{bmatrix}\end{split}\]</div>
 <p><span class="math notranslate nohighlight">\(\gamma\)</span> - when you zoom in and zoom out, the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> co-ordinates are changed proportionally. However if there is an unproportional change in <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> axes, <span class="math notranslate nohighlight">\(\gamma\)</span> takes care of that. <span class="math notranslate nohighlight">\(\gamma\)</span> is also called the <code class="docutils literal notranslate"><span class="pre">aspect</span> <span class="pre">ratio</span></code> of the pixel.</p>
 <p><span class="math notranslate nohighlight">\(s\)</span> - skew of the sensor pixel, i.e., if the pixel is a parallelogram and not a square.</p>
-<p><strong>There are 5 intrinsic parameters for a camera.</strong> Refer <a class="reference internal" href="#equation-intrinsic-eq">(4)</a></p>
+<p><strong>There are 5 intrinsic parameters for a camera.</strong> Refer <a class="reference internal" href="#equation-intrinsic-eq">(5)</a></p>
 </section>
 <section id="extrinsic-parameters-of-a-camera">
 <h2>Extrinsic parameters of a camera<a class="headerlink" href="#extrinsic-parameters-of-a-camera" title="Permalink to this headline">#</a></h2>
@@ -580,10 +577,10 @@ f &amp; 0 &amp; o_x \\
 </figure>
 <p>Using the extrinsic camera parameters, we can find the relation between the coordinates of a point <span class="math notranslate nohighlight">\(P\)</span> in the world <span class="math notranslate nohighlight">\((P_w)\)</span> and camera <span class="math notranslate nohighlight">\((P_c)\)</span> coordinates:</p>
 <div class="math notranslate nohighlight" id="equation-extrinsic">
-<span class="eqno">(5)<a class="headerlink" href="#equation-extrinsic" title="Permalink to this equation">#</a></span>\[P_c = R(P_w-T)\]</div>
+<span class="eqno">(6)<a class="headerlink" href="#equation-extrinsic" title="Permalink to this equation">#</a></span>\[P_c = R(P_w-T)\]</div>
 <p>where</p>
 <div class="math notranslate nohighlight" id="equation-extrinsic-1">
-<span class="eqno">(6)<a class="headerlink" href="#equation-extrinsic-1" title="Permalink to this equation">#</a></span>\[\begin{split}R = \begin{bmatrix}
+<span class="eqno">(7)<a class="headerlink" href="#equation-extrinsic-1" title="Permalink to this equation">#</a></span>\[\begin{split}R = \begin{bmatrix}
 r_{11} &amp; r_{12} &amp; r_{13}  \\
 r_{21} &amp; r_{22} &amp; r_{23}   \\
 r_{31} &amp; r_{32} &amp; r_{33} 
@@ -600,7 +597,7 @@ Z_w
 \end{bmatrix}, \text{ then}
 \end{split}\]</div>
 <div class="math notranslate nohighlight" id="equation-extrinsic-final">
-<span class="eqno">(7)<a class="headerlink" href="#equation-extrinsic-final" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{bmatrix}
+<span class="eqno">(8)<a class="headerlink" href="#equation-extrinsic-final" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{bmatrix}
 X_c \\
 Y_c \\
 Z_c 
@@ -634,23 +631,39 @@ Z_c = R_3^T(P_w-T)
 </ol>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\begin{bmatrix}
-X_c\\ 
-Y_c\\ 
-Z_c
+s\begin{bmatrix}x\\
+y\\
+1
 \end{bmatrix} = \begin{bmatrix}
-r_{11} &amp; r_{12} &amp; r_{13}  \\
-r_{21} &amp; r_{22} &amp; r_{23}   \\
-r_{31} &amp; r_{32} &amp; r_{33} 
-\end{bmatrix} \begin{bmatrix}
-X_w \\
+\gamma f_x &amp; s &amp; o_x \\
+0 &amp; f_y &amp; o_y  \\
+0 &amp; 0 &amp; 1 
+\end{bmatrix} \begin{bmatrix} 1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0&amp; 1&amp; 0\end{bmatrix} \begin{bmatrix}R_{3 \times 3} &amp; 0_{3 \times 1} \\
+0_{1 \times 3} &amp; 1\end{bmatrix} \begin{bmatrix} I_{3 \times 3} &amp; T_{3 \times 1} \\
+0_{1 \times 3} &amp; 1\end{bmatrix}\begin{bmatrix} X_w \\
 Y_w \\
-Z_w
-\end{bmatrix} + \begin{bmatrix}T_x \\
-T_y \\
-T_z \end{bmatrix}
+Z_w \\
+1\end{bmatrix}
 \end{split}\]</div>
-<p><span class="math notranslate nohighlight">\([X_c, Y_c, Z_c]^T\)</span> are the image coordinates and <span class="math notranslate nohighlight">\([X_w, Y_w, Z_w]^T\)</span> are the world coordinates. <span class="math notranslate nohighlight">\([T_x, T_y, T_z]^T\)</span> is the translation vector.</p>
+<div class="math notranslate nohighlight" id="equation-projection">
+<span class="eqno">(9)<a class="headerlink" href="#equation-projection" title="Permalink to this equation">#</a></span>\[\begin{split}s\begin{bmatrix}x\\
+y\\
+1
+\end{bmatrix} = \begin{bmatrix}
+f_x &amp; 0 &amp; o_x \\
+0 &amp; f_y &amp; o_y  \\
+0 &amp; 0 &amp; 1 
+\end{bmatrix} \begin{bmatrix}
+r_{11} &amp; r_{12} &amp; r_{13} &amp; T_x \\
+r_{21} &amp; r_{22} &amp; r_{23} &amp; T_y  \\
+r_{31} &amp; r_{32} &amp; r_{33} &amp; T_z
+\end{bmatrix} \begin{bmatrix} X_w \\
+Y_w \\
+Z_w \\
+1\end{bmatrix}\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\([x, y]^T\)</span> are the image coordinates and <span class="math notranslate nohighlight">\([X_w, Y_w, Z_w]^T\)</span> are the world coordinates. <span class="math notranslate nohighlight">\(T_{3 \times 1} = [T_x, T_y, T_z]^T\)</span> is the translation vector.</p>
 <p>The intrinsic and extrinsic parameters combine to form the matrix <span class="math notranslate nohighlight">\(M\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -661,7 +674,7 @@ m_{31} &amp; m_{32} &amp; m_{33} &amp; m_{34} \end{bmatrix}
 <section id="intuition-behind-the-3d-rightarrow-2d-mapping-in-a-camera">
 <h3>Intuition behind the 3D <span class="math notranslate nohighlight">\(\rightarrow\)</span> 2D mapping in a camera.<a class="headerlink" href="#intuition-behind-the-3d-rightarrow-2d-mapping-in-a-camera" title="Permalink to this headline">#</a></h3>
 <div class="math notranslate nohighlight" id="equation-mapping-matrix">
-<span class="eqno">(8)<a class="headerlink" href="#equation-mapping-matrix" title="Permalink to this equation">#</a></span>\[\begin{split}s\begin{bmatrix}x\\
+<span class="eqno">(10)<a class="headerlink" href="#equation-mapping-matrix" title="Permalink to this equation">#</a></span>\[\begin{split}s\begin{bmatrix}x\\
 y\\
 1
 \end{bmatrix} = \begin{bmatrix}m_{11} &amp; m_{12} &amp; m_{13} &amp; m_{14}  \\
@@ -670,7 +683,7 @@ m_{31} &amp; m_{32} &amp; m_{33} &amp; m_{34}\end{bmatrix} \cdot \begin{bmatrix}
 Y_w \\
 Z_w \\
 1\end{bmatrix}\end{split}\]</div>
-<p>Let’s suppose, you have <span class="math notranslate nohighlight">\(n\)</span> image coordinates of a camera and their corresponding world coordinates. Our aim to find the matrix <span class="math notranslate nohighlight">\(M\)</span>. <span class = 'high'>From <a class="reference internal" href="#equation-mapping-matrix">(8)</a>, we have:</span></p>
+<p>Let’s suppose, you have <span class="math notranslate nohighlight">\(n\)</span> image coordinates of a camera and their corresponding world coordinates. Our aim to find the matrix <span class="math notranslate nohighlight">\(M\)</span>. <span class = 'high'>From <a class="reference internal" href="#equation-mapping-matrix">(10)</a>, we have:</span></p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 sx = m_{11}X_w + m_{12}Y_w + m_{13}Z_w + m_{14} \\
@@ -698,7 +711,7 @@ min||Ax|| = ||U \Sigma V^Tx|| = ||\Sigma V^Tx||
 <p>As <span class="math notranslate nohighlight">\(||y||=1\)</span>, <span class="math notranslate nohighlight">\(x\)</span> should be the last row of <span class="math notranslate nohighlight">\(V^T\)</span>.</p>
 <p>Once we have the matrix <span class="math notranslate nohighlight">\(M\)</span>,</p>
 <div class="math notranslate nohighlight" id="equation-m-matrix">
-<span class="eqno">(9)<a class="headerlink" href="#equation-m-matrix" title="Permalink to this equation">#</a></span>\[\begin{split}M = \begin{bmatrix}m_{11} &amp; m_{12} &amp; m_{13} &amp; m_{14}  \\
+<span class="eqno">(11)<a class="headerlink" href="#equation-m-matrix" title="Permalink to this equation">#</a></span>\[\begin{split}M = \begin{bmatrix}m_{11} &amp; m_{12} &amp; m_{13} &amp; m_{14}  \\
 m_{21} &amp; m_{22} &amp; m_{23} &amp; m_{24}  \\
 m_{31} &amp; m_{32} &amp; m_{33} &amp; m_{34}\end{bmatrix} = \begin{bmatrix} f_xr_{11}+o_xr_{31} &amp; f_x r_{12}+o_xr_{32} &amp; f_xr_{13}+o_xr_{33}&amp;f_xT_x+o_xT_z \\
 f_y r_{21}+o_yr_{31} &amp; f_yr_{22}+ o_y r_{32} &amp; f_yr_{23}+o_yr_{33} &amp; f_yT_y+o_yT_z \\
@@ -724,7 +737,7 @@ r_3 &amp;= (r_{31}, r_{32}, r_{33})^T
 \end{split}\]</div>
 <p>Observe that <span class="math notranslate nohighlight">\((r_1, r_2, r_3)\)</span> is the rotation matrix, then</p>
 <div class="math notranslate nohighlight" id="equation-rotation-m">
-<span class="eqno">(10)<a class="headerlink" href="#equation-rotation-m" title="Permalink to this equation">#</a></span>\[\begin{split}(r_1, r_2, r_3) \begin{pmatrix}
+<span class="eqno">(12)<a class="headerlink" href="#equation-rotation-m" title="Permalink to this equation">#</a></span>\[\begin{split}(r_1, r_2, r_3) \begin{pmatrix}
 r_1^T\\
 r_2^T\\
 r_3^T 
@@ -750,6 +763,8 @@ m_1^Tm_3 = o_x \]</div>
 <section class="tex2jax_ignore mathjax_ignore" id="summary">
 <h1>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h1>
 <p>This chapter discusses about the pinhole camera model. The intrinsic and extrinsic camera paramters. Given a 3D world coordinates of an object, a camera performs a 3D <span class="math notranslate nohighlight">\(\rightarrow\)</span> 2D mapping of the point onto an image plane. There are a total of 11 paramters for any camera to perform this perspective projection mapping.</p>
+<p>This chapter also explains the mathematics used to find the intrinsic and extrinsic parameters of a camera using image coordinates and world coordinates. Given an image of an object, and <span class="math notranslate nohighlight">\(n\)</span> world coordinates and image coordinates, we discuss the mathematics to find the matrix <span class="math notranslate nohighlight">\(M = M_{in}\cdot M_{ex}\)</span> that would help us map any 3D point in real world to a 2D point on image plane.</p>
+<p>The next chapter provides the code for the above mathematics. We use chessboard corners as objects and try to find the intrinsic and extrinsic parameters of a given camera.</p>
 <!-- ### Rotation matrix explained -->
 </section>
 
@@ -790,7 +805,7 @@ m_1^Tm_3 = o_x \]</div>
     <a class='right-next' id="next-link" href="CVIP_Project1.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">CVIP Project 1</p>
+        <p class="prev-next-title">CVIP-project-1</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

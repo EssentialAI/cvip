@@ -190,6 +190,17 @@ f & 0 & o_x \\
 \end{bmatrix}
 $$
 
+The focal length $f$ need not be same along the $x$ and $y$ axes always. A general form of the projection matrix is:
+
+```{math}
+:label: projection_matrix
+K = \begin{bmatrix}
+f_x & 0 & o_x \\
+0 & f_y & o_y  \\
+0 & 0 & 1 
+\end{bmatrix}
+```
+
 **This is the (Intrinsic) calibration matrix.**
 
 There is an advanced version of the above matrix. It is called Camera Calibration matrix.
@@ -197,8 +208,8 @@ There is an advanced version of the above matrix. It is called Camera Calibratio
 ```{math}
 :label: intrinsic_eq
 K = \begin{bmatrix}
-\gamma f & s & o_x \\
-0 & f & o_y  \\
+\gamma f_x & s & o_x \\
+0 & f_y & o_y  \\
 0 & 0 & 1 
 \end{bmatrix}
 ```
@@ -297,24 +308,44 @@ Camera is nothing but a 3D point to 2D point mapping function that has 11 parame
 2. With these intrinsic and extrinsic parameters, we want to use the camera to map any 3D point in the real world to a 2D coordinate on the image plane.
 
 $$
-\begin{bmatrix}
-X_c\\ 
-Y_c\\ 
-Z_c
+s\begin{bmatrix}x\\
+y\\
+1
 \end{bmatrix} = \begin{bmatrix}
-r_{11} & r_{12} & r_{13}  \\
-r_{21} & r_{22} & r_{23}   \\
-r_{31} & r_{32} & r_{33} 
-\end{bmatrix} \begin{bmatrix}
-X_w \\
+\gamma f_x & s & o_x \\
+0 & f_y & o_y  \\
+0 & 0 & 1 
+\end{bmatrix} \begin{bmatrix} 1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0& 1& 0\end{bmatrix} \begin{bmatrix}R_{3 \times 3} & 0_{3 \times 1} \\
+0_{1 \times 3} & 1\end{bmatrix} \begin{bmatrix} I_{3 \times 3} & T_{3 \times 1} \\
+0_{1 \times 3} & 1\end{bmatrix}\begin{bmatrix} X_w \\
 Y_w \\
-Z_w
-\end{bmatrix} + \begin{bmatrix}T_x \\
-T_y \\
-T_z \end{bmatrix}
+Z_w \\
+1\end{bmatrix}
 $$
 
-$[X_c, Y_c, Z_c]^T$ are the image coordinates and $[X_w, Y_w, Z_w]^T$ are the world coordinates. $[T_x, T_y, T_z]^T$ is the translation vector.
+```{math}
+:label: projection
+
+s\begin{bmatrix}x\\
+y\\
+1
+\end{bmatrix} = \begin{bmatrix}
+f_x & 0 & o_x \\
+0 & f_y & o_y  \\
+0 & 0 & 1 
+\end{bmatrix} \begin{bmatrix}
+r_{11} & r_{12} & r_{13} & T_x \\
+r_{21} & r_{22} & r_{23} & T_y  \\
+r_{31} & r_{32} & r_{33} & T_z
+\end{bmatrix} \begin{bmatrix} X_w \\
+Y_w \\
+Z_w \\
+1\end{bmatrix}
+```
+
+$[x, y]^T$ are the image coordinates and $[X_w, Y_w, Z_w]^T$ are the world coordinates. $T_{3 \times 1} = [T_x, T_y, T_z]^T$ is the translation vector.
 
 The intrinsic and extrinsic parameters combine to form the matrix $M$.
 
@@ -440,7 +471,9 @@ $$f_x = \sqrt{m_1^Tm_1 - o_x^2}, \enspace f_y = \sqrt{m_2^Tm_2 - o_y^2}$$
 # Summary
 This chapter discusses about the pinhole camera model. The intrinsic and extrinsic camera paramters. Given a 3D world coordinates of an object, a camera performs a 3D $\rightarrow$ 2D mapping of the point onto an image plane. There are a total of 11 paramters for any camera to perform this perspective projection mapping.
 
+This chapter also explains the mathematics used to find the intrinsic and extrinsic parameters of a camera using image coordinates and world coordinates. Given an image of an object, and $n$ world coordinates and image coordinates, we discuss the mathematics to find the matrix $M = M_{in}\cdot M_{ex}$ that would help us map any 3D point in real world to a 2D point on image plane.
 
+The next chapter provides the code for the above mathematics. We use chessboard corners as objects and try to find the intrinsic and extrinsic parameters of a given camera.
 
 <!-- ### Rotation matrix explained -->
 
