@@ -307,6 +307,8 @@ Camera is nothing but a 3D point to 2D point mapping function that has 11 parame
 1. Given an image of an object, we would like to find the intrinsic and extrinsic parameters of a camera.
 2. With these intrinsic and extrinsic parameters, we want to use the camera to map any 3D point in the real world to a 2D coordinate on the image plane.
 
+$[X_w, Y_w, Z_w]^T \rightarrow [X_c, Y_c, Z_c]^T$ is rigid transformation and $[X_c, Y_c, Z_c]^T \rightarrow s[x,y,1]$ is projective transformation (perspective projection).
+
 $$
 s\begin{bmatrix}x\\
 y\\
