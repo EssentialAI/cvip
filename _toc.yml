@@ -6,6 +6,8 @@ root: intro
 chapters:
   - file: pinhole
   - file: CVIP_Project1.ipynb
+  - file: image-transformations
+  - file: image-formation
   # - url : https://essentialai.github.io/rl
   #   title: Reinforcement Learning notes
   # - url: https://essentialai.github.io

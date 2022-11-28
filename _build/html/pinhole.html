@@ -129,6 +129,16 @@ const thebe_selector_output = ".output, .cell_output"
    CVIP-project-1
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="image-transformations.html">
+   Image Transformations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="image-formation.html">
+   Image Formation and Stereo Vision
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -629,6 +639,7 @@ Z_c = R_3^T(P_w-T)
 <li><p>Given an image of an object, we would like to find the intrinsic and extrinsic parameters of a camera.</p></li>
 <li><p>With these intrinsic and extrinsic parameters, we want to use the camera to map any 3D point in the real world to a 2D coordinate on the image plane.</p></li>
 </ol>
+<p><span class="math notranslate nohighlight">\([X_w, Y_w, Z_w]^T \rightarrow [X_c, Y_c, Z_c]^T\)</span> is rigid transformation and <span class="math notranslate nohighlight">\([X_c, Y_c, Z_c]^T \rightarrow s[x,y,1]\)</span> is projective transformation (perspective projection).</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 s\begin{bmatrix}x\\
