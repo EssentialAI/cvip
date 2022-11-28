@@ -31,11 +31,11 @@ Changing DOF using aperture
 ```
 
 
-```{figure} /imgs/exposure_traingle.PNG
+```{figure} /imgs/exposure_triangle.PNG
 
 ---
 height: 150px
-name: exposure_traingle
+name: exposure_triangle
 ---
 
 Exposure Triangle
@@ -152,10 +152,12 @@ name: depth_from_disparity
 
 Depth from Disparity
 ```
-B - Baseline
-Z - Depth
-d - Disparity
+B - Baseline,
+Z - Depth,
+d - Disparity,
 f - focal length
+
+Among B,f,Z,d, disparity has the most uncertainty.
 
 _Keep in mind that the image plane considered here is the virtual image plane._
 
@@ -193,6 +195,43 @@ name: epipolar_1
 
 Cameras not aligned
 ```
+
+Once the images are aligned, the epiholes are at infinity.
+
+```{figure} /imgs/epiholes.PNG
+
+---
+height: 150px
+name: epiholes
+---
+
+Epiholes when cameras are aligned.
+```
+
+### Image Rectification
+This process is the correct of cameras so that cameras (image planes of cameras) are parallel to the baselines.
+
+_This is done when the two cameras do not have the same focal lengths or are not parallel to the baseline._
+
+**Image Rectification is a projective transformation.**
+
+```{figure} /imgs/rectification.PNG
+
+---
+height: 150px
+name: rectification
+---
+
+Image Rectification example.
+```
+
+Advantage of image rectification is that the search for a corresponding pixel from left and right image becomes a <span class = 'high'>linear search</span>. You only need to search for the pixel along the epipolar line that is already rectified.
+
+This leads to the correspondence problem that we want to solve to begin with.
+
+### Basic Stereo matching algorithm
+
+As the images are rectified, we can perform a linear search algorithm to find the corresponding pixel from left image to right image.
 
 
 
