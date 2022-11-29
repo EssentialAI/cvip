@@ -57,6 +57,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="_static/brain1.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="How to rectify two cameras?" href="image-rectification.html" />
     <link rel="prev" title="Image Transformations" href="image-transformations.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -136,6 +137,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Image Formation and Stereo Vision
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="image-rectification.html">
+   How to rectify two cameras?
   </a>
  </li>
 </ul>
@@ -588,6 +594,29 @@ f - focal length</p>
 <section id="basic-stereo-matching-algorithm">
 <h3>Basic Stereo matching algorithm<a class="headerlink" href="#basic-stereo-matching-algorithm" title="Permalink to this headline">#</a></h3>
 <p>As the images are rectified, we can perform a linear search algorithm to find the corresponding pixel from left image to right image.</p>
+<p>This leads us to the correspondence problem. How to find the matching pixel along the line?</p>
+<p><span class = 'high'>Usually, we use an image patch or a window.</span></p>
+<p>We use either Sum of Squared Distance or the Normalized correlation to find the matching patch between two images.</p>
+<p>You calculate SSD or NCC for every pixel. <span class = 'high'>The lower the SSD, the better. The higher the value of NCC, the better the match.</span></p>
+<p>The size of the window is a hyperparameter to be tuned. If the window size is large - there will be a smooth disparity map, and low details.</p>
+<p>The window searching method fails if the selected pixel for searching is generic, or noise.</p>
+<figure class="align-default" id="id12">
+<img alt="_images/sim_failure.PNG" src="_images/sim_failure.PNG" />
+<figcaption>
+<p><span class="caption-number">Fig. 21 </span><span class="caption-text">Window based similarity search failure.</span><a class="headerlink" href="#id12" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Closer objects have more disparity.</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Length of Baseline} \propto \frac{1}{\text{depth error}}
+\]</div>
+<p>Constraints with window based search:</p>
+<ul class="simple">
+<li><p>Uniqueness constriaint</p></li>
+<li><p>Ordering constraint</p></li>
+<li><p>Smoothness constraint (neighboring pixels are similar (expect at edges))</p></li>
+</ul>
 </section>
 </section>
 </section>
@@ -625,6 +654,13 @@ f - focal length</p>
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Image Transformations</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="image-rectification.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">How to rectify two cameras?</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
