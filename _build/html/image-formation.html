@@ -57,6 +57,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="_static/brain1.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="How to rectify two cameras?" href="image-rectification.html" />
     <link rel="prev" title="Image Transformations" href="image-transformations.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -136,6 +137,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Image Formation and Stereo Vision
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="image-rectification.html">
+   How to rectify two cameras?
   </a>
  </li>
 </ul>
@@ -312,6 +318,16 @@ title="Print to PDF"
        Epipolar Geometry
       </a>
      </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#image-rectification">
+       Image Rectification
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#basic-stereo-matching-algorithm">
+       Basic Stereo matching algorithm
+      </a>
+     </li>
     </ul>
    </li>
   </ul>
@@ -377,6 +393,16 @@ title="Print to PDF"
        Epipolar Geometry
       </a>
      </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#image-rectification">
+       Image Rectification
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#basic-stereo-matching-algorithm">
+       Basic Stereo matching algorithm
+      </a>
+     </li>
     </ul>
    </li>
   </ul>
@@ -412,7 +438,7 @@ title="Print to PDF"
 </figcaption>
 </figure>
 <figure class="align-default" id="id3">
-<img alt="imgs/exposure_traingle.PNG" src="imgs/exposure_traingle.PNG" />
+<img alt="_images/exposure_triangle.PNG" src="_images/exposure_triangle.PNG" />
 <figcaption>
 <p><span class="caption-number">Fig. 12 </span><span class="caption-text">Exposure Triangle</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -512,10 +538,11 @@ Find coordinates of 3D point from its projection into 2 or multiple images.</p><
 <p><span class="caption-number">Fig. 16 </span><span class="caption-text">Depth from Disparity</span><a class="headerlink" href="#id7" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>B - Baseline
-Z - Depth
-d - Disparity
+<p>B - Baseline,
+Z - Depth,
+d - Disparity,
 f - focal length</p>
+<p>Among B,f,Z,d, disparity has the most uncertainty.</p>
 <p><em>Keep in mind that the image plane considered here is the virtual image plane.</em></p>
 <p>Another point to note that disparity calculation after the camera are calibrated and both the image planes are along the same line. To achieve this, we perform image rectification and image plane alignment.</p>
 <p>Once the correspondence problem is solved, we can calculate the depth at every point in the image.</p>
@@ -542,6 +569,54 @@ f - focal length</p>
 <p><span class="caption-number">Fig. 18 </span><span class="caption-text">Cameras not aligned</span><a class="headerlink" href="#id9" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
+<p>Once the images are aligned, the epiholes are at infinity.</p>
+<figure class="align-default" id="id10">
+<img alt="_images/epiholes.PNG" src="_images/epiholes.PNG" />
+<figcaption>
+<p><span class="caption-number">Fig. 19 </span><span class="caption-text">Epiholes when cameras are aligned.</span><a class="headerlink" href="#id10" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="image-rectification">
+<h3>Image Rectification<a class="headerlink" href="#image-rectification" title="Permalink to this headline">#</a></h3>
+<p>This process is the correct of cameras so that cameras (image planes of cameras) are parallel to the baselines.</p>
+<p><em>This is done when the two cameras do not have the same focal lengths or are not parallel to the baseline.</em></p>
+<p><strong>Image Rectification is a projective transformation.</strong></p>
+<figure class="align-default" id="id11">
+<img alt="_images/rectification.PNG" src="_images/rectification.PNG" />
+<figcaption>
+<p><span class="caption-number">Fig. 20 </span><span class="caption-text">Image Rectification example.</span><a class="headerlink" href="#id11" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Advantage of image rectification is that the search for a corresponding pixel from left and right image becomes a <span class = 'high'>linear search</span>. You only need to search for the pixel along the epipolar line that is already rectified.</p>
+<p>This leads to the correspondence problem that we want to solve to begin with.</p>
+</section>
+<section id="basic-stereo-matching-algorithm">
+<h3>Basic Stereo matching algorithm<a class="headerlink" href="#basic-stereo-matching-algorithm" title="Permalink to this headline">#</a></h3>
+<p>As the images are rectified, we can perform a linear search algorithm to find the corresponding pixel from left image to right image.</p>
+<p>This leads us to the correspondence problem. How to find the matching pixel along the line?</p>
+<p><span class = 'high'>Usually, we use an image patch or a window.</span></p>
+<p>We use either Sum of Squared Distance or the Normalized correlation to find the matching patch between two images.</p>
+<p>You calculate SSD or NCC for every pixel. <span class = 'high'>The lower the SSD, the better. The higher the value of NCC, the better the match.</span></p>
+<p>The size of the window is a hyperparameter to be tuned. If the window size is large - there will be a smooth disparity map, and low details.</p>
+<p>The window searching method fails if the selected pixel for searching is generic, or noise.</p>
+<figure class="align-default" id="id12">
+<img alt="_images/sim_failure.PNG" src="_images/sim_failure.PNG" />
+<figcaption>
+<p><span class="caption-number">Fig. 21 </span><span class="caption-text">Window based similarity search failure.</span><a class="headerlink" href="#id12" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Closer objects have more disparity.</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Length of Baseline} \propto \frac{1}{\text{depth error}}
+\]</div>
+<p>Constraints with window based search:</p>
+<ul class="simple">
+<li><p>Uniqueness constriaint</p></li>
+<li><p>Ordering constraint</p></li>
+<li><p>Smoothness constraint (neighboring pixels are similar (expect at edges))</p></li>
+</ul>
 </section>
 </section>
 </section>
@@ -579,6 +654,13 @@ f - focal length</p>
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Image Transformations</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="image-rectification.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">How to rectify two cameras?</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>

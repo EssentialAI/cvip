@@ -8,6 +8,7 @@ chapters:
   - file: CVIP_Project1.ipynb
   - file: image-transformations
   - file: image-formation
+  - file: image-rectification
   # - url : https://essentialai.github.io/rl
   #   title: Reinforcement Learning notes
   # - url: https://essentialai.github.io

@@ -31,11 +31,11 @@ Changing DOF using aperture
 ```
 
 
-```{figure} /imgs/exposure_traingle.PNG
+```{figure} /imgs/exposure_triangle.PNG
 
 ---
 height: 150px
-name: exposure_traingle
+name: exposure_triangle
 ---
 
 Exposure Triangle
@@ -232,6 +232,43 @@ This leads to the correspondence problem that we want to solve to begin with.
 ### Basic Stereo matching algorithm
 
 As the images are rectified, we can perform a linear search algorithm to find the corresponding pixel from left image to right image.
+
+This leads us to the correspondence problem. How to find the matching pixel along the line?
+
+<span class = 'high'>Usually, we use an image patch or a window.</span>
+
+We use either Sum of Squared Distance or the Normalized correlation to find the matching patch between two images.
+
+You calculate SSD or NCC for every pixel. <span class = 'high'>The lower the SSD, the better. The higher the value of NCC, the better the match.</span>
+
+The size of the window is a hyperparameter to be tuned. If the window size is large - there will be a smooth disparity map, and low details.
+
+The window searching method fails if the selected pixel for searching is generic, or noise.
+
+```{figure} /imgs/sim_failure.PNG
+
+---
+height: 150px
+name: sim_failure
+---
+
+Window based similarity search failure.
+```
+
+Closer objects have more disparity.
+
+$$
+\text{Length of Baseline} \propto \frac{1}{\text{depth error}}
+$$
+
+Constraints with window based search:
+* Uniqueness constriaint
+* Ordering constraint
+* Smoothness constraint (neighboring pixels are similar (expect at edges))
+
+
+
+
 
 
 
