@@ -1,5 +1,35 @@
 /* The Modal (background) */
 
+@font-face {
+  font-family: circular-std;
+  src: url(CircularStd-Book.ttf);
+}
+
+@font-face {
+  font-family: cstd-bold;
+  src: url(CircularStd-Bold.ttf);
+}
+
+body{
+  font-family: circular-std;
+}
+
+h1{
+  font-family: cstd-bold;
+}
+
+h2{
+  font-family: cstd-bold;
+}
+
+h3{
+  font-family: cstd-bold;
+}
+
+h4{
+  font-family: cstd-bold;
+}
+
 .high {
   /* font-size: 17px; */
   color:#E83E8C;
