@@ -131,7 +131,7 @@ E $\rightarrow$ extrinsic parameters
 
 <hr>
 
-F $\rightarrow$ 15 Degrees of freedom
+F $\rightarrow$ 7 Degrees of freedom
 
 rank(F) $\rightarrow$ 2
 
