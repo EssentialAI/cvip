@@ -198,6 +198,19 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-essential-matrix">
+   The Essential Matrix
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -210,6 +223,19 @@
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-essential-matrix">
+   The Essential Matrix
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -232,8 +258,21 @@
 <img alt="_images/epipolar.PNG" src="_images/epipolar.PNG" />
 <p class="caption"><span class="caption-number">Fig. 22 </span><span class="caption-text">Epipolar Geometry</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </div>
-<p><span class="math notranslate nohighlight">\( P_l \rightarrow\)</span>
-Using the co-planarity constraint, we can find a relation between the point in the left camera and the point in the right camera.</p>
+<p><span class="math notranslate nohighlight">\(P \rightarrow\)</span> Point in real world. <span class="math notranslate nohighlight">\([X,Y,Z]^T\)</span></p>
+<p><span class="math notranslate nohighlight">\( P_l \rightarrow \)</span> Position of <span class="math notranslate nohighlight">\(P\)</span> as seen from left camera. <span class="math notranslate nohighlight">\({P_l}_{3 \times 1}\)</span></p>
+<p><span class="math notranslate nohighlight">\( P_r \rightarrow \)</span> Position of <span class="math notranslate nohighlight">\(P\)</span> as seen from right camera. <span class="math notranslate nohighlight">\({P_r}_{3 \times 1}\)</span></p>
+<p><span class="math notranslate nohighlight">\( T \rightarrow \)</span> Baseline between the camera <span class="math notranslate nohighlight">\(C_l\)</span> and <span class="math notranslate nohighlight">\(C_r\)</span>.</p>
+<p>Using the co-planarity constraint, we can find a relation between the point in the left camera and the point in the right camera.</p>
+<div class="figure align-default" id="id2">
+<img alt="_images/co-planarity-constraint.PNG" src="_images/co-planarity-constraint.PNG" />
+<p class="caption"><span class="caption-number">Fig. 23 </span><span class="caption-text">Using coplanarity constraint to find the relation between <span class="math notranslate nohighlight">\(P_l\)</span> and <span class="math notranslate nohighlight">\(P_r\)</span></span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<div class="section" id="the-essential-matrix">
+<h2>The Essential Matrix<a class="headerlink" href="#the-essential-matrix" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-default" id="id3">
+<img alt="_images/essential-matrix.PNG" src="_images/essential-matrix.PNG" />
+<p class="caption"><span class="caption-number">Fig. 24 </span><span class="caption-text">Essential Matrix</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
 <!-- Intuitively, to rectify two cameras with each other, we need to rotate the cameras.
 1. Rotate right (or left) camera to be in the same pose as left (or right) camera.
 2. Then rotate both cameras to be parallel to the baseline.
@@ -294,6 +333,7 @@ x_2^TFx = 0
 $$
 P_r = R(P_l-T)
 $$ -->
+</div>
 </div>
 
     <script type="text/x-thebe-config">

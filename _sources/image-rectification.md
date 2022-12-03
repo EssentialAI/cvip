@@ -27,8 +27,38 @@ name: epipolar
 Epipolar Geometry
 ```
 
-$ P_l \rightarrow$
+$P \rightarrow$ Point in real world. $[X,Y,Z]^T$
+
+$ P_l \rightarrow $ Position of $P$ as seen from left camera. ${P_l}_{3 \times 1}$
+
+$ P_r \rightarrow $ Position of $P$ as seen from right camera. ${P_r}_{3 \times 1}$
+
+$ T \rightarrow $ Baseline between the camera $C_l$ and $C_r$.
+
 Using the co-planarity constraint, we can find a relation between the point in the left camera and the point in the right camera.
+
+```{figure} /imgs/co-planarity-constraint.PNG
+
+---
+height: 150px
+name: co-planar
+---
+
+Using coplanarity constraint to find the relation between $P_l$ and $P_r$
+```
+
+## The Essential Matrix
+
+```{figure} /imgs/essential-matrix.PNG
+
+---
+height: 150px
+name: essential matrix
+---
+
+Essential Matrix
+```
+
 
 
 
