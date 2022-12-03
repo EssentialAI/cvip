@@ -15,7 +15,7 @@ Better yet, given a point $x_l$ in the left camera, can we find the correspondin
 
 For pixel matching between two cameras, we need to first rectify the images, such that the pixel search between left and right images becomes a linear search.
 
-To perform this recitification, we need to rotate cameras such that the image planes are parallel to each other.
+To perform this rectification, we need to rotate cameras such that the image planes are parallel to each other.
 
 ```{figure} /imgs/epipolar.PNG
 
@@ -58,6 +58,111 @@ name: essential matrix
 
 Essential Matrix
 ```
+
+The vector $T = [T_x, T_y, T_z]^T$ is the relative distance (in 3D coordinates) between the left and the right cameras.
+
+The above figure gives us the relations:
+
+```{math}
+:label: essential-matrix1
+
+E = RS
+```
+
+```{math}
+:label: essential-matrix
+
+P_r^TEP_l = 0
+```
+
+If you look at the above equation carefully, the matrix $E$ is not unique. The above equation is satisfied even if we use $2E$ or $nE$ instead of $E$. This means $E$ is not unique.
+
+```{admonition} Why is $E$ not unique?
+:class: tip
+
+This is due to the fact what the baseline $T$ provides us with the information of the direction between cameras, but does not provide the actual distance between the cameras. The equation $P_r^TRT \times P_l=0$ is satisfied for any integer multiple of $T$.
+```
+
+$E$ has only 5 degrees of freedom.
+
+Using $P_r^TEP_l = 0$ we cannot find the exact relation between $P_l$ and $P_r$. The equation has infinite solutions.
+
+## The Fundamental Matrix
+
+<span class = 'high'>An important detail to observe here is that, $P_l$ and $P_r$ are 3D locations as seen from left and right cameras, respectively.</span>
+
+<span class = 'high'>Fundamental matrix captures the relation between the 2D image coordinates.</span>
+
+```{figure} /imgs/fundamental-matrix.PNG
+
+---
+height: 150px
+name: fundamental matrix
+---
+
+Fundamental Matrix
+```
+
+In the above figure $M_l$ and $M_r$ are the intrinsic parameter matrices of left and right cameras respectively.
+
+```{admonition} What is the use of Essential and Fundamental matrices?
+:class: tip
+
+The Essential Matrix is responsible for translating and rotating the cameras such that both the cameras are aligned with each other. It provides the constraint equation between the 3D points $P_l$ and $P_r$.
+
+The Fundamental Matrix is responsible for mapping the above 3D points onto the pixel locations $x_l$ and $x_r$ on the virtual image plane such that the epipolar lines are aligned. This means the correspondence problem now becomes a linear search.
+
+This is how essential matrix and fundamental matrix perform image rectification.
+```
+
+Fundamental matrix knows the intrinsic parameters of both cameras, and the extrinsic parameters from the Essential Matrix. However, fundamental matrix also does not know the distance between the cameras. <span class = 'high'>Fundamental Matrix is not unique.</span>
+
+Even if you know $x_l$, you still cannot find the coordinates of $x_r$, using the fundamental matrix.
+
+This perfectly matches with the <span class = 'high'>correspondence problem.</span> The Fundamental matrix helps us perform the DEPTH ESTIMATION, by boiling down the problem to correspondence problem. This problem shall be discussed in the future sections.
+
+```{note}
+
+E $\rightarrow$ 5 Degrees of freedom
+
+rank(E) $\rightarrow$ 2
+
+E $\rightarrow$ extrinsic parameters
+
+<hr>
+
+F $\rightarrow$ 15 Degrees of freedom
+
+rank(F) $\rightarrow$ 2
+
+F $\rightarrow$ extrinsic parameters from E and intrinsic parameters of both the cameras.
+
+$x_l$ and $x_r$ are the homogeneous coordinates of the 2D point. In the form of $s[X,Y,1]^T$.
+```
+
+# Correspondence problem using Fundamental Matrix
+
+```{math}
+:label: correspondence
+
+\begin{bmatrix}
+x_i \\
+y_i \\
+1 
+\end{bmatrix}^T = \begin{bmatrix}
+f_{11} & f_{12} & f_{13}  \\
+f_{21} & f_{22} & f_{23}   \\
+f_{31} & f_{32} & f_{33} 
+\end{bmatrix}\begin{bmatrix}
+x_i^' \\
+y_i^' \\
+1 
+\end{bmatrix}
+```
+
+
+
+
 
 
 

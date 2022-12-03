@@ -203,9 +203,26 @@
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-essential-matrix">
-   The Essential Matrix
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   How to rectify two cameras?
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-essential-matrix">
+     The Essential Matrix
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-fundamental-matrix">
+     The Fundamental Matrix
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#correspondence-problem-using-fundamental-matrix">
+   Correspondence problem using Fundamental Matrix
   </a>
  </li>
 </ul>
@@ -228,9 +245,26 @@
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-essential-matrix">
-   The Essential Matrix
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   How to rectify two cameras?
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-essential-matrix">
+     The Essential Matrix
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-fundamental-matrix">
+     The Fundamental Matrix
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#correspondence-problem-using-fundamental-matrix">
+   Correspondence problem using Fundamental Matrix
   </a>
  </li>
 </ul>
@@ -253,7 +287,7 @@
 <p>Better yet, given a point <span class="math notranslate nohighlight">\(x_l\)</span> in the left camera, can we find the corresponding point <span class="math notranslate nohighlight">\(x_r\)</span> in the right camera? Multi-view geometry problem.</p>
 </div>
 <p>For pixel matching between two cameras, we need to first rectify the images, such that the pixel search between left and right images becomes a linear search.</p>
-<p>To perform this recitification, we need to rotate cameras such that the image planes are parallel to each other.</p>
+<p>To perform this rectification, we need to rotate cameras such that the image planes are parallel to each other.</p>
 <div class="figure align-default" id="id1">
 <img alt="_images/epipolar.PNG" src="_images/epipolar.PNG" />
 <p class="caption"><span class="caption-number">Fig. 22 </span><span class="caption-text">Epipolar Geometry</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
@@ -273,6 +307,67 @@
 <img alt="_images/essential-matrix.PNG" src="_images/essential-matrix.PNG" />
 <p class="caption"><span class="caption-number">Fig. 24 </span><span class="caption-text">Essential Matrix</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </div>
+<p>The vector <span class="math notranslate nohighlight">\(T = [T_x, T_y, T_z]^T\)</span> is the relative distance (in 3D coordinates) between the left and the right cameras.</p>
+<p>The above figure gives us the relations:</p>
+<div class="math notranslate nohighlight" id="equation-essential-matrix1">
+<span class="eqno">(17)<a class="headerlink" href="#equation-essential-matrix1" title="Permalink to this equation">¶</a></span>\[E = RS\]</div>
+<div class="math notranslate nohighlight" id="equation-essential-matrix">
+<span class="eqno">(18)<a class="headerlink" href="#equation-essential-matrix" title="Permalink to this equation">¶</a></span>\[P_r^TEP_l = 0\]</div>
+<p>If you look at the above equation carefully, the matrix <span class="math notranslate nohighlight">\(E\)</span> is not unique. The above equation is satisfied even if we use <span class="math notranslate nohighlight">\(2E\)</span> or <span class="math notranslate nohighlight">\(nE\)</span> instead of <span class="math notranslate nohighlight">\(E\)</span>. This means <span class="math notranslate nohighlight">\(E\)</span> is not unique.</p>
+<div class="tip admonition">
+<p class="admonition-title">Why is <span class="math notranslate nohighlight">\(E\)</span> not unique?</p>
+<p>This is due to the fact what the baseline <span class="math notranslate nohighlight">\(T\)</span> provides us with the information of the direction between cameras, but does not provide the actual distance between the cameras. The equation <span class="math notranslate nohighlight">\(P_r^TRT \times P_l=0\)</span> is satisfied for any integer multiple of <span class="math notranslate nohighlight">\(T\)</span>.</p>
+</div>
+<p><span class="math notranslate nohighlight">\(E\)</span> has only 5 degrees of freedom.</p>
+<p>Using <span class="math notranslate nohighlight">\(P_r^TEP_l = 0\)</span> we cannot find the exact relation between <span class="math notranslate nohighlight">\(P_l\)</span> and <span class="math notranslate nohighlight">\(P_r\)</span>. The equation has infinite solutions.</p>
+</div>
+<div class="section" id="the-fundamental-matrix">
+<h2>The Fundamental Matrix<a class="headerlink" href="#the-fundamental-matrix" title="Permalink to this headline">¶</a></h2>
+<p><span class = 'high'>An important detail to observe here is that, <span class="math notranslate nohighlight">\(P_l\)</span> and <span class="math notranslate nohighlight">\(P_r\)</span> are 3D locations as seen from left and right cameras, respectively.</span></p>
+<p><span class = 'high'>Fundamental matrix captures the relation between the 2D image coordinates.</span></p>
+<div class="figure align-default" id="id4">
+<img alt="_images/fundamental-matrix.PNG" src="_images/fundamental-matrix.PNG" />
+<p class="caption"><span class="caption-number">Fig. 25 </span><span class="caption-text">Fundamental Matrix</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<p>In the above figure <span class="math notranslate nohighlight">\(M_l\)</span> and <span class="math notranslate nohighlight">\(M_r\)</span> are the intrinsic parameter matrices of left and right cameras respectively.</p>
+<div class="tip admonition">
+<p class="admonition-title">What is the use of Essential and Fundamental matrices?</p>
+<p>The Essential Matrix is responsible for translating and rotating the cameras such that both the cameras are aligned with each other. It provides the constraint equation between the 3D points <span class="math notranslate nohighlight">\(P_l\)</span> and <span class="math notranslate nohighlight">\(P_r\)</span>.</p>
+<p>The Fundamental Matrix is responsible for mapping the above 3D points onto the pixel locations <span class="math notranslate nohighlight">\(x_l\)</span> and <span class="math notranslate nohighlight">\(x_r\)</span> on the virtual image plane such that the epipolar lines are aligned. This means the correspondence problem now becomes a linear search.</p>
+<p>This is how essential matrix and fundamental matrix perform image rectification.</p>
+</div>
+<p>Fundamental matrix knows the intrinsic parameters of both cameras, and the extrinsic parameters from the Essential Matrix. However, fundamental matrix also does not know the distance between the cameras. <span class = 'high'>Fundamental Matrix is not unique.</span></p>
+<p>Even if you know <span class="math notranslate nohighlight">\(x_l\)</span>, you still cannot find the coordinates of <span class="math notranslate nohighlight">\(x_r\)</span>, using the fundamental matrix.</p>
+<p>This perfectly matches with the <span class = 'high'>correspondence problem.</span> The Fundamental matrix helps us perform the DEPTH ESTIMATION, by boiling down the problem to correspondence problem. This problem shall be discussed in the future sections.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>E <span class="math notranslate nohighlight">\(\rightarrow\)</span> 5 Degrees of freedom</p>
+<p>rank(E) <span class="math notranslate nohighlight">\(\rightarrow\)</span> 2</p>
+<p>E <span class="math notranslate nohighlight">\(\rightarrow\)</span> extrinsic parameters</p>
+<hr>
+<p>F <span class="math notranslate nohighlight">\(\rightarrow\)</span> 15 Degrees of freedom</p>
+<p>rank(F) <span class="math notranslate nohighlight">\(\rightarrow\)</span> 2</p>
+<p>F <span class="math notranslate nohighlight">\(\rightarrow\)</span> extrinsic parameters from E and intrinsic parameters of both the cameras.</p>
+<p><span class="math notranslate nohighlight">\(x_l\)</span> and <span class="math notranslate nohighlight">\(x_r\)</span> are the homogeneous coordinates of the 2D point. In the form of <span class="math notranslate nohighlight">\(s[X,Y,1]^T\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="correspondence-problem-using-fundamental-matrix">
+<h1>Correspondence problem using Fundamental Matrix<a class="headerlink" href="#correspondence-problem-using-fundamental-matrix" title="Permalink to this headline">¶</a></h1>
+<div class="math notranslate nohighlight" id="equation-correspondence">
+<span class="eqno">(19)<a class="headerlink" href="#equation-correspondence" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{bmatrix}
+x_i \\
+y_i \\
+1 
+\end{bmatrix}^T = \begin{bmatrix}
+f_{11} &amp; f_{12} &amp; f_{13}  \\
+f_{21} &amp; f_{22} &amp; f_{23}   \\
+f_{31} &amp; f_{32} &amp; f_{33} 
+\end{bmatrix}\begin{bmatrix}
+x_i^' \\
+y_i^' \\
+1 
+\end{bmatrix}\end{split}\]</div>
 <!-- Intuitively, to rectify two cameras with each other, we need to rotate the cameras.
 1. Rotate right (or left) camera to be in the same pose as left (or right) camera.
 2. Then rotate both cameras to be parallel to the baseline.
@@ -333,7 +428,6 @@ x_2^TFx = 0
 $$
 P_r = R(P_l-T)
 $$ -->
-</div>
 </div>
 
     <script type="text/x-thebe-config">
