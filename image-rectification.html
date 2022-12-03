@@ -363,11 +363,14 @@ y_i \\
 f_{11} &amp; f_{12} &amp; f_{13}  \\
 f_{21} &amp; f_{22} &amp; f_{23}   \\
 f_{31} &amp; f_{32} &amp; f_{33} 
-\end{bmatrix}\begin{bmatrix}
-x_i^' \\
-y_i^' \\
+\end{bmatrix}
+\begin{bmatrix}
+x_{i}' \\
+y_{i}' \\
 1 
 \end{bmatrix}\end{split}\]</div>
+<p>In the above equation, if we find the Fundamental matrix, we can find the relation between <span class="math notranslate nohighlight">\(x_l\)</span> and <span class="math notranslate nohighlight">\(x_r\)</span>. This means, we can map any 2D image coordinate from one camera to a 2D image coordinate on another camera. This would solve the depth estimation and the 2D <span class="math notranslate nohighlight">\(\rightarrow\)</span> 3D.</p>
+<p><strong>Finding <span class="math notranslate nohighlight">\(F\)</span> can be solved if we find 8 corresponding points from left camera and right camera.</strong></p>
 <!-- Intuitively, to rectify two cameras with each other, we need to rotate the cameras.
 1. Rotate right (or left) camera to be in the same pose as left (or right) camera.
 2. Then rotate both cameras to be parallel to the baseline.

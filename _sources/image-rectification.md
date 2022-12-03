@@ -153,12 +153,17 @@ y_i \\
 f_{11} & f_{12} & f_{13}  \\
 f_{21} & f_{22} & f_{23}   \\
 f_{31} & f_{32} & f_{33} 
-\end{bmatrix}\begin{bmatrix}
-x_i^' \\
-y_i^' \\
+\end{bmatrix}
+\begin{bmatrix}
+x_{i}' \\
+y_{i}' \\
 1 
 \end{bmatrix}
 ```
+
+In the above equation, if we find the Fundamental matrix, we can find the relation between $x_l$ and $x_r$. This means, we can map any 2D image coordinate from one camera to a 2D image coordinate on another camera. This would solve the depth estimation and the 2D $\rightarrow$ 3D.
+
+**Finding $F$ can be solved if we find 8 corresponding points from left camera and right camera.**
 
 
 
