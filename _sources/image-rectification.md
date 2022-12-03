@@ -1,6 +1,41 @@
 # How to rectify two cameras?
 
-Intuitively, to rectify two cameras with each other, we need to rotate the cameras.
+**Recap**
+
+The entire aim of rectification is to perform the 2D $\rightarrow$ 3D mapping from an image coordinate to a 3D real world point. This is required to ESTIMATE the true depth information of a point in space. <span class = 'high'>We have discussed, how this 2D $\rightarrow$ 3D mapping is not possible by using a single image and we require a minimum of 2 images.</span>
+
+With two images, for depth estimation, we make use of <span class = 'high'>epipolar geometry.</span>
+
+```{note}
+
+Given two image coordinates $x_l$ and $x_r$ of the same point from left and right cameras, can we perform the 2D to 3D mapping to estimate the depth between points in the real world?
+
+Better yet, given a point $x_l$ in the left camera, can we find the corresponding point $x_r$ in the right camera? Multi-view geometry problem.
+```
+
+For pixel matching between two cameras, we need to first rectify the images, such that the pixel search between left and right images becomes a linear search.
+
+To perform this recitification, we need to rotate cameras such that the image planes are parallel to each other.
+
+```{figure} /imgs/epipolar.PNG
+
+---
+height: 150px
+name: epipolar
+---
+
+Epipolar Geometry
+```
+
+$ P_l \rightarrow$
+Using the co-planarity constraint, we can find a relation between the point in the left camera and the point in the right camera.
+
+
+
+
+
+
+<!-- Intuitively, to rectify two cameras with each other, we need to rotate the cameras.
 1. Rotate right (or left) camera to be in the same pose as left (or right) camera.
 2. Then rotate both cameras to be parallel to the baseline.
 
@@ -59,7 +94,7 @@ x_2^TFx = 0
 
 $$
 P_r = R(P_l-T)
-$$
+$$ -->
 
 
 

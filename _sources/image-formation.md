@@ -209,7 +209,7 @@ Epiholes when cameras are aligned.
 ```
 
 ### Image Rectification
-This process is the correct of cameras so that cameras (image planes of cameras) are parallel to the baselines.
+This process is the correction of cameras so that cameras (image planes of cameras) are parallel to the baselines.
 
 _This is done when the two cameras do not have the same focal lengths or are not parallel to the baseline._
 
