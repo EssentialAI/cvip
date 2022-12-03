@@ -1,42 +1,51 @@
 /* The Modal (background) */
 
-@font-face {
+
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
+/* @font-face {
   font-family: cstd;
   src: url(CircularStd-Book.ttf) format("truetype");
   font-weight: normal;
-}
+} */
 
-@font-face {
+/* @font-face {
   font-family: cstd;
   src: url(CircularStd-Bold.ttf) format("truetype");
   font-weight: bold;
 }
 
-@font-face {
+/* @font-face {
   font-family: cstd;
   src: url(CircularStd-BookItalic.ttf) format("truetype");
   font-style: italic;
-}
+} */
 
 body{
-  font-family: cstd;
+  font-family: sans-serif;
 }
 
 h1{
-  font-family: cstd;
+  font-family: sans-serif;
 }
 
 h2{
-  font-family: cstd;
+  font-family: sans-serif;
 }
 
 h3{
-  font-family: cstd;
+  font-family: sans-serif;
 }
 
 h4{
-  font-family: cstd;
+  font-family: sans-serif;
 }
+
+h5{
+  font-family: sans-serif;
+}
+
+
 
 .high {
   /* font-size: 17px; */
