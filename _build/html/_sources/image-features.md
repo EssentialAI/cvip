@@ -106,6 +106,11 @@ name: Harris
 Harris corner detector equation.
 ```
 
+$w(x,y)$ demonstrates the importance of difference in intensity of pixels at a location. Sometimes, the pixels at the center can be more important than edge pixels.
+
+<span class = 'high'>A good features has $E(u,v)$ as a very high value.</span>
+
+
 
 
 
