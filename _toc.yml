@@ -9,7 +9,7 @@ chapters:
   - file: image-transformations
   - file: image-formation
   - file: image-rectification
-  - file: RANSAC
+  - file: image-features
   # - url : https://essentialai.github.io/rl
   #   title: Reinforcement Learning notes
   # - url: https://essentialai.github.io

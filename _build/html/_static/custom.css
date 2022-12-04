@@ -1,42 +1,5 @@
 /* The Modal (background) */
 
-@font-face {
-  font-family: cstd;
-  src: url(CircularStd-Book.ttf) format("truetype");
-  font-weight: normal;
-}
-
-@font-face {
-  font-family: cstd;
-  src: url(CircularStd-Bold.ttf) format("truetype");
-  font-weight: bold;
-}
-
-@font-face {
-  font-family: cstd;
-  src: url(CircularStd-BookItalic.ttf) format("truetype");
-  font-style: italic;
-}
-
-body{
-  font-family: cstd;
-}
-
-h1{
-  font-family: cstd;
-}
-
-h2{
-  font-family: cstd;
-}
-
-h3{
-  font-family: cstd;
-}
-
-h4{
-  font-family: cstd;
-}
 
 .high {
   /* font-size: 17px; */
