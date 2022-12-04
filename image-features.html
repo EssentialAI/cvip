@@ -43,6 +43,8 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe,.cell"
@@ -195,6 +197,19 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-math-behind-harris-corner-detector">
+   The math behind Harris corner detector
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -207,6 +222,19 @@
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-math-behind-harris-corner-detector">
+   The math behind Harris corner detector
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -215,7 +243,71 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="image-features-and-matching">
 <h1>Image Features and Matching<a class="headerlink" href="#image-features-and-matching" title="Permalink to this headline">¶</a></h1>
-<p>Finding <a class="reference external" href="image-rectification.html#the-fundamental-matrix">fundamental matrix</a> is kind of a chicken-and-egg problem. To map the coordinates between left and right cameras, we require the fundamental matrix, but to find the fundamental matrix, we want at least 8 corresponding image coordinates between left and right image planes.’</p>
+<p>Finding <a class="reference external" href="image-rectification.html#the-fundamental-matrix">fundamental matrix</a> is kind of a chicken-and-egg problem. To map the coordinates between left and right cameras, we require the fundamental matrix, but to find the fundamental matrix, we want at least 8 corresponding image coordinates between left and right image planes.</p>
+<p>We use image features to solve this correspondence problem. Applications of these image-features based mapping can be found in Panorama creation.</p>
+<p>Local features in the image are used to find these corresponding points of objects.</p>
+<p><strong>Advantages of local features.</strong></p>
+<ul class="simple">
+<li><p>Locality - robust to occlusion and clutter.</p></li>
+<li><p>Distinctiveness - can differentiate a large database of objects.</p></li>
+<li><p>Quantify - hundreds or thousands in a single image.</p></li>
+<li><p>Efficiency - real-time performance achievable.</p></li>
+<li><p>Generality - exploit different types of features in different situations.</p></li>
+</ul>
+<p><strong>Challenges</strong></p>
+<ul class="simple">
+<li><p>Repeatability</p></li>
+<li><p>Uniqueness</p></li>
+<li><p>Invariance</p></li>
+</ul>
+<p>Local features are usually a patch of <span class="math notranslate nohighlight">\(n \times n\)</span> dimensions.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This leads us to a question. “Which are the best local features to solve the correspondence problem?”</p>
+</div>
+<div class="figure align-default" id="id1">
+<img alt="_images/which-features.PNG" src="_images/which-features.PNG" />
+<p class="caption"><span class="caption-number">Fig. 26 </span><span class="caption-text">Feature selection for correspondence</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<p>Intuitively, <span class = 'high'>corners are the good features</span>, because corners are easier to identify (solving the uniqueness challenge) with low ambiguity.</p>
+<div class="figure align-default" id="id2">
+<img alt="_images/corners-as-features.PNG" src="_images/corners-as-features.PNG" />
+<p class="caption"><span class="caption-number">Fig. 27 </span><span class="caption-text">Corners as features</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<p><strong>Harris corner detector gives a mathematical approach for determining the performance of an image patch w.r.t. movement of the patch along x and y axes.</strong></p>
+<div class="section" id="the-math-behind-harris-corner-detector">
+<h2>The math behind Harris corner detector<a class="headerlink" href="#the-math-behind-harris-corner-detector" title="Permalink to this headline">¶</a></h2>
+<p>Each value at every pixel represents its intensity from <span class="math notranslate nohighlight">\(0 \rightarrow 255\)</span>. When the image patch is translated across <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> axis, the measure of intensity at each pixel changes. If this change is drastic, then the location could be a corner. This would be a good candidate for correspondence matching.</p>
+<p>The difference in the intensity between pixel locations of two patches is simply a <span class = 'high'>square of difference of the intensity values at every pixel for first and second patch.</span></p>
+<div class="math notranslate nohighlight" id="equation-delta-i">
+<span class="eqno">(20)<a class="headerlink" href="#equation-delta-i" title="Permalink to this equation">¶</a></span>\[\Delta I = \sum_{i,j}({I_{i,j}}_{\text{patch-1}}-{I_{i,j}}_{\text{patch-2}})^2\]</div>
+<p>If <span class="math notranslate nohighlight">\(\Delta I\)</span> is low, it shows that the feature is bad. The change in Intensity <span class="math notranslate nohighlight">\(\Delta I\)</span> depends on the movement along <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> axes. This movement along an axis helps us determine the geometry of the patch.</p>
+<p>To acheive the above patch movement along <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> axes, we generalize <code class="docutils literal notranslate"><span class="pre">eq</span></code>{delta-I} as:</p>
+<div class="figure align-default" id="id3">
+<img alt="_images/delta-I.PNG" src="_images/delta-I.PNG" />
+<p class="caption"><span class="caption-number">Fig. 28 </span><span class="caption-text">Change in the intensity of pixels with movement of image patch.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>Using the taylor series expansion, we represent:</p>
+<div class="math notranslate nohighlight">
+\[
+I(x+u, y+v) = I(x,y)+ u{I'}_x(x,y) + v{I'}_y(x,y)
+\]</div>
+<p>The matrix form of <span class="math notranslate nohighlight">\(E(u,v)\)</span> can be written as:</p>
+<div class="math notranslate nohighlight" id="equation-harris-corner">
+<span class="eqno">(21)<a class="headerlink" href="#equation-harris-corner" title="Permalink to this equation">¶</a></span>\[\begin{split}E(u,v) \approx \begin{bmatrix}
+u &amp; v
+\end{bmatrix} \sum_{x,y}w(x,y)
+\begin{bmatrix}
+I_x^2 &amp; I_xI_y \\
+I_x I_y &amp; I_y^2
+\end{bmatrix} \begin{bmatrix} u \\
+v \end{bmatrix}\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(I_x\)</span> and <span class="math notranslate nohighlight">\(I_y\)</span> are the gradients of Intensity function along <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> axes.</p>
+<div class="figure align-default" id="id4">
+<img alt="_images/E_u_v.PNG" src="_images/E_u_v.PNG" />
+<p class="caption"><span class="caption-number">Fig. 29 </span><span class="caption-text">Harris corner detector equation.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
