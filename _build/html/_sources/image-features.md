@@ -110,6 +110,150 @@ $w(x,y)$ demonstrates the importance of difference in intensity of pixels at a l
 
 <span class = 'high'>A good features has $E(u,v)$ as a very high value.</span>
 
+```{admonition} $I_x$ and $I_y$ elaborated
+:class: tip
+
+$I_x$ and $I_y$ are the partial derivatives of the function $I$ w.r.t. $x$ and $y$ respectively.
+
+$$
+I_x = \frac{\partial I(x,y)}{\partial x}
+$$
+
+$$
+I_y = \frac{\partial I(x,y)}{\partial y}
+$$
+
+<span class = 'high'>Along the vertical edge $I_y = 0$, $I_x = \text{large}$</span>
+
+<span class = 'high'>Along the horizontal edge $I_x = 0$, $I_y = \text{large}$.</span>
+
+<span class = 'high'>At a corner $I_x = \text{large}, I_y = \text{large}$.</span>
+```
+
+Using geometry and the concept of eigen values, the matrix $M$ is represented in the form of eigen values, $\lambda _1$ and $\lambda _2$
+
+Eigen values represent the maximum change in $x$ and $y$ direction of $I$.
+
+```{figure} /imgs/l1-l2.PNG
+
+---
+height: 150px
+name: l1-l2
+---
+
+Eigen value representation of gradients $I_x$ and $I_y$
+```
+
+
+```{figure} /imgs/class-by-eigen.PNG
+
+---
+height: 150px
+name: class-by-eigen
+---
+
+Classification of image patches using eigen values.
+```
+
+```{figure} /imgs/l1-l2-1.PNG
+
+---
+height: 150px
+name: l1-l2-1
+---
+
+Eigen value representation of $M$
+```
+
+```{figure} /imgs/l1-l2-2.PNG
+
+---
+height: 150px
+class: caption
+name: l1_l2_2
+---
+
+The Matrix $H$.
+```
+
+```{figure} /imgs/l1-l2-3.PNG
+
+---
+height: 150px
+name: l1-l2-3
+---
+
+Eigen values of $H$
+```
+
+```{figure} /imgs/l1-l2-4.PNG
+
+---
+height: 150px
+name: l1-l2-4
+---
+
+Detection on a chess board
+```
+```{note}
+At every pixel we calculate the matrix $M$.
+
+$\lambda_+$ is the amount of increase in the direction of largest increase. <span class = 'high'>It is responsible for the detection of corners as well as the edges.</span>
+
+$\lambda_-$ is the amount of increase in the direction of smallest increase. <span class = 'high'>It is responsible for the detection of corners in the image.</span>
+```
+
+```{figure} /imgs/l1-l2-5.PNG
+
+---
+height: 150px
+name: l1-l2-5
+---
+
+Detection on a chess board
+```
+
+```{figure} /imgs/harris-operator.PNG
+
+---
+height: 150px
+name: harris-operator
+---
+
+Harris Operator for the matrix $H$ in `Fig-33`
+```
+
+The Harris Operator $f$ is smoother than $\lambda_-$. $\lambda_-$ is more picky.
+
+```{figure} /imgs/harris-operator1.PNG
+
+---
+height: 150px
+name: harris-operator1
+---
+
+Harris Operator v/s $\lambda_-$
+```
+
+Input             |  Detection | Output 
+:-------------------------:|:-------------------------:|:-------------------------:
+![](/imgs/harris-example-left.PNG)  |  ![](/imgs/harris-example-right.PNG)  | ![](/imgs/harris-example-bw.PNG)
+
+Even though the image, is tilted (or projected), the harris corner detector is able to find the corners in the image.
+
+```{note}
+Using harris corner detector, it might seem that we can find the corresponding points to find the fundamental matrix. However, these points are just the candidates for the best points to consider for correspondence. We have to remove outliers from these corners, along with other important challenges that arise from Harris Corner detector.
+
+<span class= 'high'>Another important point is that, while Harris corner detector gives you all the corners in the image, it does not give you the correspondence between the corners.</span>
+```
+
+
+
+
+
+
+
+
 
 
 

@@ -10,6 +10,7 @@ chapters:
   - file: image-formation
   - file: image-rectification
   - file: image-features
+  - file: using-scale-as-feature
   # - url : https://essentialai.github.io/rl
   #   title: Reinforcement Learning notes
   # - url: https://essentialai.github.io
