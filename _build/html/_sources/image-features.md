@@ -213,6 +213,8 @@ name: l1-l2-5
 Detection on a chess board
 ```
 
+## The Harris Operator
+
 ```{figure} /imgs/harris-operator.PNG
 
 ---
