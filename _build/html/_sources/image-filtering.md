@@ -55,6 +55,17 @@ Visual examples for image filtering are shown [here](https://www.codingame.com/p
 
 Information about strided convolution and non-strided convolution here given [here](https://stats.stackexchange.com/questions/360899/difference-between-strided-and-non-strided-convolution)
 ```
+## Image shift using convolution
 
+
+```{figure} /imgs/shift-convolution.PNG
+
+---
+height: 150px
+name: shift-convolution
+---
+
+Shift using convolution
+```
 
 
