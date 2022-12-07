@@ -69,3 +69,18 @@ Ransac automatically takes care of the noise in the training samples.
 ```{note}
 For more details about RANSAC refer [here](https://www.youtube.com/watch?v=9D5rrtCC_E0) and [here](http://www.cse.yorku.ca/~kosta/CompVis_Notes/ransac.pdf)
 ```
+
+In general,
+
+```{math}
+:label: ransac
+
+p = 1-(1-w^n)^k
+```
+
+where,
+* p = probability of selecting inliers
+* w = ratio of inliers to total # of points
+* n = minimum # of points required (for line=2, circle = 3)
+* k = # of iterations
+

@@ -56,6 +56,7 @@
     <link rel="shortcut icon" href="_static/brain1.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Image Filtering" href="image-filtering.html" />
     <link rel="prev" title="Using scale as a feature for correspondence" href="using-scale-as-feature.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -139,6 +140,11 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Feature Matching
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="image-filtering.html">
+   Image Filtering
   </a>
  </li>
 </ul>
@@ -329,6 +335,16 @@
 <p class="admonition-title">Note</p>
 <p>For more details about RANSAC refer <a class="reference external" href="https://www.youtube.com/watch?v=9D5rrtCC_E0">here</a> and <a class="reference external" href="http://www.cse.yorku.ca/~kosta/CompVis_Notes/ransac.pdf">here</a></p>
 </div>
+<p>In general,</p>
+<div class="math notranslate nohighlight" id="equation-ransac">
+<span class="eqno">(24)<a class="headerlink" href="#equation-ransac" title="Permalink to this equation">¶</a></span>\[p = 1-(1-w^n)^k\]</div>
+<p>where,</p>
+<ul class="simple">
+<li><p>p = probability of selecting inliers</p></li>
+<li><p>w = ratio of inliers to total # of points</p></li>
+<li><p>n = minimum # of points required (for line=2, circle = 3)</p></li>
+<li><p>k = # of iterations</p></li>
+</ul>
 </div>
 
     <script type="text/x-thebe-config">
@@ -362,6 +378,13 @@
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Using scale as a feature for correspondence</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="image-filtering.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Image Filtering</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             
