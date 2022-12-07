@@ -138,6 +138,36 @@ name: rotational-ambiguity1
 Eliminating Rotational Ambiguity
 ```
 
+## SIFT Vector
+
+A more simplified version of gradient of intensity representation of ellipse is to consider a circle and calculate gradient for each pixel and maintain a histogram of gradients at every pixel.
+
+The histogram represents the distribution of gradients in the image patch. Even when the image patch is rotated, the histogram undergoes circular shift.
+
+```{figure} /imgs/sift-features.PNG
+
+---
+height: 150px
+name: sift-features
+---
+
+SIFT Features
+```
+
+```{figure} /imgs/sift-hand-drawn.PNG
+
+---
+height: 150px
+name: sift-hand-drawn
+---
+
+SIFT Features
+```
+
+<span class = 'high'>An important detail to note is that SIFT features consider the gradient of intensity values and not the pixel values.</span>
+
+
+
 
 
 

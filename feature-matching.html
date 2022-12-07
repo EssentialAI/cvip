@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>cvip &#8212; Computer Vision and Image Processing</title>
+    <title>Feature Matching &#8212; Computer Vision and Image Processing</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -43,6 +43,8 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe,.cell"
@@ -50,10 +52,11 @@
         const thebe_selector_output = ".output,.cell_output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <link rel="canonical" href="https://essentialai.github.io/cvip/README.html" />
+    <link rel="canonical" href="https://essentialai.github.io/cvip/feature-matching.html" />
     <link rel="shortcut icon" href="_static/brain1.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Using scale as a feature for correspondence" href="using-scale-as-feature.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -97,7 +100,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="pinhole.html">
    Introduction and the Pinhole camera
@@ -133,8 +136,8 @@
    Using scale as a feature for correspondence
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="feature-matching.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Feature Matching
   </a>
  </li>
@@ -179,7 +182,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/README.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/feature-matching.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -204,6 +207,31 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Feature Matching
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#properties-of-sift-features">
+     Properties of SIFT features
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ransac">
+   RANSAC
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -211,19 +239,96 @@
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>cvip</h1>
+                <h1>Feature Matching</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Feature Matching
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#properties-of-sift-features">
+     Properties of SIFT features
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ransac">
+   RANSAC
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="cvip">
-<h1>cvip<a class="headerlink" href="#cvip" title="Permalink to this headline">¶</a></h1>
+  <div class="tex2jax_ignore mathjax_ignore section" id="feature-matching">
+<h1>Feature Matching<a class="headerlink" href="#feature-matching" title="Permalink to this headline">¶</a></h1>
+<p>Keep in mind that the problem at hand is the 2D <span class="math notranslate nohighlight">\(\rightarrow\)</span> 3D reconstruction problem.</p>
+<ul class="simple">
+<li><p>The previous pages discuss about using an image patch to find the best candidates for the 8 corresponding points between left and right images to find the <span class = 'high'>Fundamental Matrix.</span></p></li>
+<li><p>We use the Harris matrix <span class="math notranslate nohighlight">\(H\)</span> to find the potential best candidates for correspondence between the left and right images. Using eigen values of the matrix <span class="math notranslate nohighlight">\(H\)</span> makes the computation of corner detection much simpler. This leads to the Harris Operator <span class="math notranslate nohighlight">\(f\)</span> that is defined <a class="reference external" href="image-features.html#the-harris-operator">here</a>.</p></li>
+<li><p>However, the harris operator is not scale invariant. To find the automatic size of the patch that would best find the corner (candidates for correspondence). This is  grid search problem.</p></li>
+<li><p>SIFT features provide a better alternative to the above grid search by converting the rectangular image patch to a circle and using gradient values at each pixel. These gradients are represented in the form of histograms by rotating the circle the gradient values are matched between the patches.</p></li>
+</ul>
+<p><span class='high'>This leads us to the feature matching problem. Finding what candidate in the left image maps to what candidate in the right image.</span></p>
+<div class="figure align-default" id="id1">
+<img alt="_images/feature-matching.PNG" src="_images/feature-matching.PNG" />
+<p class="caption"><span class="caption-number">Fig. 50 </span><span class="caption-text">Feature Matching</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Even though the features can be independent (or a good candidate) there could be more than one match for a feature in the left image to feature in the right image.</p>
+</div>
+<p>To overcome this problem, we pick two matches for a given feature in the left image and maintain a score function to find the relative difference between the matched features. Refer to the feature matching example for the window fencing from slides.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Harris corner detector tells if a feature is good candidate for correspondence matching or not, it does not say if the feature is unique or no.</p>
+</div>
+<p>Performance of feature matching is measured in terms of true positives/false positives true negatives/false negatives.</p>
+<div class="figure align-default" id="id2">
+<img alt="_images/performance.PNG" src="_images/performance.PNG" />
+<p class="caption"><span class="caption-number">Fig. 51 </span><span class="caption-text">Performance of Feature Matching</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<div class="section" id="properties-of-sift-features">
+<h2>Properties of SIFT features<a class="headerlink" href="#properties-of-sift-features" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Can handle changes in viewpoint</p>
+<ul>
+<li><p>Upto about 60 degree out of plane rotation</p></li>
+</ul>
+</li>
+<li><p>Can handle significant changes in illumination</p></li>
+<li><p>Fast and efficient - can run in real time</p></li>
+<li><p>Lots of code available.</p></li>
+</ul>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="ransac">
+<h1>RANSAC<a class="headerlink" href="#ransac" title="Permalink to this headline">¶</a></h1>
+<p>This is a randomized algorithm. We randomly pick a random sample of points and define a <span class = 'high'>loss function</span>. We choose points that minimize this loss function.</p>
+<p>This is very close to the <span class = 'high'>Model fitting</span> problem in Machine Learning. For example, least squares. Refer Linear Regression for more information.</p>
+<p>For Linear Regression, we need precisely two training points to find the slope <span class="math notranslate nohighlight">\(a\)</span> and intercept <span class="math notranslate nohighlight">\(b\)</span>.</p>
+<p>Here, in the case of Fundamental matrix, we have <span class="math notranslate nohighlight">\( x_r' F x_l \)</span>. We need 8 corresponding points. In this case the fundamental matrix is a parametric model. To achieve the best curve that best captures the geometry of points, we define a loss function and minimize the loss function.</p>
+<p>In case of Linear Regression, this loss function is the Sum of Squared Residuals.</p>
+<p>Ransac automatically takes care of the noise in the training samples.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For more details about RANSAC refer <a class="reference external" href="https://www.youtube.com/watch?v=9D5rrtCC_E0">here</a> and <a class="reference external" href="http://www.cse.yorku.ca/~kosta/CompVis_Notes/ransac.pdf">here</a></p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -250,7 +355,14 @@
               
             
                 <!-- Previous / next buttons -->
-<div class='prev-next-area'>
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="using-scale-as-feature.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Using scale as a feature for correspondence</p>
+        </div>
+    </a>
 </div>
             
         </div>

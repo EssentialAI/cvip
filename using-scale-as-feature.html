@@ -56,6 +56,7 @@
     <link rel="shortcut icon" href="_static/brain1.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Feature Matching" href="feature-matching.html" />
     <link rel="prev" title="Image Features and Matching" href="image-features.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -134,6 +135,11 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Using scale as a feature for correspondence
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="feature-matching.html">
+   Feature Matching
   </a>
  </li>
 </ul>
@@ -215,6 +221,11 @@
    </span>
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sift-vector">
+   SIFT Vector
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -241,6 +252,11 @@
    <span class="math notranslate nohighlight">
     \(f\)
    </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sift-vector">
+   SIFT Vector
   </a>
  </li>
 </ul>
@@ -318,6 +334,20 @@
 <p class="caption"><span class="caption-number">Fig. 47 </span><span class="caption-text">Eliminating Rotational Ambiguity</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
 </div>
 </div>
+<div class="section" id="sift-vector">
+<h2>SIFT Vector<a class="headerlink" href="#sift-vector" title="Permalink to this headline">¶</a></h2>
+<p>A more simplified version of gradient of intensity representation of ellipse is to consider a circle and calculate gradient for each pixel and maintain a histogram of gradients at every pixel.</p>
+<p>The histogram represents the distribution of gradients in the image patch. Even when the image patch is rotated, the histogram undergoes circular shift.</p>
+<div class="figure align-default" id="id10">
+<img alt="_images/sift-features.PNG" src="_images/sift-features.PNG" />
+<p class="caption"><span class="caption-number">Fig. 48 </span><span class="caption-text">SIFT Features</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-default" id="id11">
+<img alt="_images/sift-hand-drawn.PNG" src="_images/sift-hand-drawn.PNG" />
+<p class="caption"><span class="caption-number">Fig. 49 </span><span class="caption-text">SIFT Features</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+</div>
+<p><span class = 'high'>An important detail to note is that SIFT features consider the gradient of intensity values and not the pixel values.</span></p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -351,6 +381,13 @@
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Image Features and Matching</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="feature-matching.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Feature Matching</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             
