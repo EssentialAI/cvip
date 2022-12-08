@@ -48,13 +48,38 @@ The convolution step measures how close the vectors are in terms of the angle be
 
 Convolution is very close to correlation, but we first flip the kernel vertically and horizontally and then compute the dot product to get each pixel of the output image.
 
-```{note}
+```{seealso}
 Visual representation of $3 \times 3$ convolution filters is shown [here](https://medium.com/@icecreamlabs/3x3-convolution-filters-a-popular-choice-75ab1c8b4da8) and this git [repo](https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md)
 
 Visual examples for image filtering are shown [here](https://www.codingame.com/playgrounds/2524/basic-image-manipulation/filtering)
 
 Information about strided convolution and non-strided convolution here given [here](https://stats.stackexchange.com/questions/360899/difference-between-strided-and-non-strided-convolution)
 ```
+## Image shift using convolution
+
+
+```{figure} /imgs/shift-convolution.PNG
+
+---
+height: 150px
+name: shift-convolution
+---
+
+Shift using convolution
+```
+
+Image Sharpening             |  Image Sharpening   
+:-------------------------:|:-------------------------:
+![](/imgs/sharpening-1.PNG)  |  ![](/imgs/sharpening-2.PNG)
+
+## Edge detection
+
+Sobel filter             | Sobel filter   
+:-------------------------:|:-------------------------:
+![](/imgs/sobel-edges.PNG)  |  ![](/imgs/sobel-edges-1.PNG)
+
+
+
 
 
 

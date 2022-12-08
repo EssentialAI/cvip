@@ -56,6 +56,7 @@
     <link rel="shortcut icon" href="_static/brain1.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Image Fourier Analysis" href="image-fourier-analysis.html" />
     <link rel="prev" title="Feature Matching" href="feature-matching.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -146,6 +147,11 @@
    Image Filtering
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="image-fourier-analysis.html">
+   Image Fourier Analysis
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -222,6 +228,16 @@
    Convolution
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#image-shift-using-convolution">
+   Image shift using convolution
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#edge-detection">
+   Edge detection
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -245,6 +261,16 @@
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#convolution">
    Convolution
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#image-shift-using-convolution">
+   Image shift using convolution
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#edge-detection">
+   Edge detection
   </a>
  </li>
 </ul>
@@ -301,7 +327,7 @@ h[m,n] = \sum_{k,l}g[k,l] f[m+k, n+l]
 <h2>Convolution<a class="headerlink" href="#convolution" title="Permalink to this headline">¶</a></h2>
 <div class="figure align-default" id="id1">
 <img alt="_images/convolution.PNG" src="_images/convolution.PNG" />
-<p class="caption"><span class="caption-number">Fig. 52 </span><span class="caption-text">Convolution</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 51 </span><span class="caption-text">Convolution</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </div>
 <div class="tip admonition">
 <p class="admonition-title">Why to flip the kernel?</p>
@@ -309,12 +335,46 @@ h[m,n] = \sum_{k,l}g[k,l] f[m+k, n+l]
 </div>
 <p>The convolution step measures how close the vectors are in terms of the angle between the vectors.</p>
 <p>Convolution is very close to correlation, but we first flip the kernel vertically and horizontally and then compute the dot product to get each pixel of the output image.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
 <p>Visual representation of <span class="math notranslate nohighlight">\(3 \times 3\)</span> convolution filters is shown <a class="reference external" href="https://medium.com/&#64;icecreamlabs/3x3-convolution-filters-a-popular-choice-75ab1c8b4da8">here</a> and this git <a class="reference external" href="https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md">repo</a></p>
 <p>Visual examples for image filtering are shown <a class="reference external" href="https://www.codingame.com/playgrounds/2524/basic-image-manipulation/filtering">here</a></p>
 <p>Information about strided convolution and non-strided convolution here given <a class="reference external" href="https://stats.stackexchange.com/questions/360899/difference-between-strided-and-non-strided-convolution">here</a></p>
 </div>
+</div>
+<div class="section" id="image-shift-using-convolution">
+<h2>Image shift using convolution<a class="headerlink" href="#image-shift-using-convolution" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-default" id="id2">
+<img alt="_images/shift-convolution.PNG" src="_images/shift-convolution.PNG" />
+<p class="caption"><span class="caption-number">Fig. 52 </span><span class="caption-text">Shift using convolution</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>Image Sharpening</p></th>
+<th class="text-align:center head"><p>Image Sharpening</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p><img alt="" src="_images/sharpening-1.PNG" /></p></td>
+<td class="text-align:center"><p><img alt="" src="_images/sharpening-2.PNG" /></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="edge-detection">
+<h2>Edge detection<a class="headerlink" href="#edge-detection" title="Permalink to this headline">¶</a></h2>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>Sobel filter</p></th>
+<th class="text-align:center head"><p>Sobel filter</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p><img alt="" src="_images/sobel-edges.PNG" /></p></td>
+<td class="text-align:center"><p><img alt="" src="_images/sobel-edges-1.PNG" /></p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
@@ -349,6 +409,13 @@ h[m,n] = \sum_{k,l}g[k,l] f[m+k, n+l]
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Feature Matching</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="image-fourier-analysis.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Image Fourier Analysis</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             

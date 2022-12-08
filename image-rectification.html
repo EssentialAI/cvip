@@ -147,6 +147,11 @@
    Image Filtering
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="image-fourier-analysis.html">
+   Image Fourier Analysis
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -374,7 +379,7 @@
 x_i \\
 y_i \\
 1 
-\end{bmatrix}^T = \begin{bmatrix}
+\end{bmatrix}^T \begin{bmatrix}
 f_{11} &amp; f_{12} &amp; f_{13}  \\
 f_{21} &amp; f_{22} &amp; f_{23}   \\
 f_{31} &amp; f_{32} &amp; f_{33} 
@@ -383,7 +388,7 @@ f_{31} &amp; f_{32} &amp; f_{33}
 x_{i}' \\
 y_{i}' \\
 1 
-\end{bmatrix}\end{split}\]</div>
+\end{bmatrix}=0\end{split}\]</div>
 <p>In the above equation, if we find the Fundamental matrix, we can find the relation between <span class="math notranslate nohighlight">\(x_l\)</span> and <span class="math notranslate nohighlight">\(x_r\)</span>. This means, we can map any 2D image coordinate from one camera to a 2D image coordinate on another camera. This would solve the depth estimation and the 2D <span class="math notranslate nohighlight">\(\rightarrow\)</span> 3D.</p>
 <p><strong>Finding <span class="math notranslate nohighlight">\(F\)</span> can be solved if we find 8 corresponding points from left camera and right camera.</strong></p>
 <!-- Intuitively, to rectify two cameras with each other, we need to rotate the cameras.
