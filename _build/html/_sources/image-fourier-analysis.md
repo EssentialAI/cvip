@@ -188,6 +188,8 @@ Edges as gradients | Edges as gradients
 :-------------------------:|:-------------------------:
 ![](/imgs/image-gradient-1.PNG)  |  ![](/imgs/image-gradient-2.PNG)
 
+$\theta$ represents the direction of the edge.
+
 Edges for noisy input | Edges for noisy input
 :-------------------------:|:-------------------------:
 ![](/imgs/edge-1.PNG)  |  ![](/imgs/edges-2.PNG)
