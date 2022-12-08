@@ -3,7 +3,7 @@
 
 <a href="https://essentialai.github.io"><button class="btn">EssentialAI <i class="fa fa-home"></i></button></a>
 
-This section contains my notes for the Computer Vision and Image Processing course during the Fall-2022 semester taught by Professor [Junsong Yuan](https://cse.buffalo.edu/~jsyuan/).
+This jupyter-book contains my notes for the Computer Vision and Image Processing course during the Fall-2022 semester taught by Professor [Junsong Yuan](https://cse.buffalo.edu/~jsyuan/).
 
 ### Course description
 
