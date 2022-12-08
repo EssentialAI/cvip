@@ -13,6 +13,7 @@ chapters:
   - file: using-scale-as-feature
   - file: feature-matching
   - file: image-filtering
+  - file: image-fourier-analysis
   # - url : https://essentialai.github.io/rl
   #   title: Reinforcement Learning notes
   # - url: https://essentialai.github.io

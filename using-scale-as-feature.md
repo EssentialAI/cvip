@@ -12,7 +12,7 @@ In other words, we would like the features to be scale invariant.
 
 Harris detector is good in the sense that even though the image undergoes projective transformation, the corners are still preserved and detected by the Harris corner detector.
 
-```{figure} /imgs/scale-invariant.PNG
+<!-- ```{figure} /imgs/scale-invariant.PNG
 
 ---
 height: 150px
@@ -20,7 +20,7 @@ name: scale-invariant
 ---
 
 Scale Invariant features for feature detection.
-```
+``` -->
 
 ```{admonition} Is there a way to modify Harris corner detector to be scale invariant?
 :class: tip
