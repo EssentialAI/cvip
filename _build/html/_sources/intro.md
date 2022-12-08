@@ -3,7 +3,7 @@
 
 <a href="https://essentialai.github.io"><button class="btn">EssentialAI <i class="fa fa-home"></i></button></a>
 
-This section contains my notes for the Computer Vision and Image Processing course during the Fall-2022 semester taught by Professor [Junsong Yuan](https://cse.buffalo.edu/~jsyuan/).
+This jupyter-book contains my notes for the Computer Vision and Image Processing course during the Fall-2022 semester taught by Professor [Junsong Yuan](https://cse.buffalo.edu/~jsyuan/).
 
 ### Course description
 
@@ -16,7 +16,7 @@ The sections on the left hand side of this book indicate the chapters and the na
 
 ### Acknowledgments
 
-The entire work is gathered from the lecture slides and lecture videos of [CSE-573 Computer Vision and Image Processing](https://engineering.buffalo.edu/content/dam/engineering/computer-science-engineering/graduate/courses/graduate-course-syllabi/CSE573-Yuan.pdf) course at UB. All the work is owned by the course instructors. These notes have been segregated after receiving permission from the course instructor.
+The entire work is gathered from the lecture slides and lecture videos of [CSE-573 Computer Vision and Image Processing](https://engineering.buffalo.edu/content/dam/engineering/computer-science-engineering/graduate/courses/graduate-course-syllabi/CSE573-Yuan.pdf) course at UB. All the work is owned by the course instructors. These notes have been hosted after receiving permission from the course instructor.
 
 ### Reference books
 * Computer Vision: Algorithms and Applications, by Richard Szeliski
